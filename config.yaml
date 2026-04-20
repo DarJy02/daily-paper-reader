@@ -25,3 +25,38 @@ subscriptions:
     stage: A
     diff_threshold_pct: 15
   keyword_recall_mode: or
+  intent_profiles:
+    - tag: LLMH
+      description: 关于大型语言模型幻觉问题的学术论文检索
+      enabled: true
+      paper_sources:
+        - arxiv
+      keywords:
+        - keyword: LLM hallucination
+          keyword_cn: 大型语言模型幻觉
+          query: research papers discussing hallucinations in large language models
+        - keyword: model hallucination
+          keyword_cn: 模型幻觉
+          query: studies on model hallucination and false generation in AI systems
+      intent_queries:
+        - query: methods and frameworks for detecting and mitigating hallucinations in LLMs
+          query_cn: 用于检测和缓解大型语言模型幻觉的方法与框架
+          enabled: true
+          source: manual
+          note: ''
+      updated_at: '2026-04-20T10:14:17.369Z'
+source_backends:
+  arxiv:
+    papers_table: arxiv_papers
+    use_vector_rpc: true
+    vector_rpc: match_arxiv_papers
+    vector_rpc_exact: match_arxiv_papers_exact
+    use_bm25_rpc: true
+    bm25_rpc: match_arxiv_papers_bm25
+    sync_table: arxiv_sync_status
+    sync_success_value: success
+    schema: public
+    kind: supabase
+    enabled: true
+    url: https://lyucdwgefyfbmaiopjbk.supabase.co
+    anon_key: sb_publishable_lX-oi64Uxyd7SIVv3_w2Uw_MTOojeKq
