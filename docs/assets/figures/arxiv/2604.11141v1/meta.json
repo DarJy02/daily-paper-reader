@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.11141v1/fig-001.webp",
+      "caption": "Figure 1: Workflow of the proposed HUMBR ensemble system. The system calculates consensus using a Hybrid Utility Function (Semantic + Lexical) and applies a consensus threshold 𝜏 to filter risky outputs.",
+      "page": 3,
+      "index": 1,
+      "width": 1017,
+      "height": 527
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11141v1/fig-002.webp",
+      "caption": "Figure 4: Outcome Distribution Analysis. The stacked bars represent the full breakdown of 100% of samples. HUMBR (Top) greatly expands the “Success” rate (Teal) and reduces the “Recall Errors” (Gray).",
+      "page": 8,
+      "index": 2,
+      "width": 512,
+      "height": 292
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11141v1/fig-003.webp",
+      "caption": "Table 4: Detailed Failure Mode Breakdown. HUMBR dominates in quality and completeness.",
+      "page": 8,
+      "index": 3,
+      "width": 506,
+      "height": 389
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11141v1/fig-004.webp",
+      "caption": "Figure 2: Cost-𝑃fail Pareto Frontier: An idealized depiction of the operational trade-off landscape.",
+      "page": 4,
+      "index": 4,
+      "width": 523,
+      "height": 305
+    }
+  ]
+}

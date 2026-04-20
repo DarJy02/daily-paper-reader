@@ -1,0 +1,46 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.11258v1/fig-001.webp",
+      "caption": "Table 1: Quantitative results on multimodal medical reasoning benchmarks. We evaluate our proposed DialecticMed against specialized models, generalist foundation models, and state-of-the-art agents. #Tok indicates the average token consumption per query, and Cost ($) is estimated per 1,000 queries based on standard API pricing.",
+      "page": 6,
+      "index": 1,
+      "width": 929,
+      "height": 462
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11258v1/fig-002.webp",
+      "caption": "Table 2: Ablation study on component effectiveness. To ensure rigorous attribution, we define the ablated baselines as follows: (1) w/o Mediator: Removes the dynamic consensus graph and feedback loop, defaulting to an unregulated text debate. (2) w/o Graph (Last Hypothesis): Retains the mediator but removes the rootto-leaf path aggregation, strictly taking the final turn’s utterance as the diagnosis (vulnerable to the “lost-in-themiddle” effect). (3) w/o VFM (Text-only Debate): The Opponent argues textually without explicitly computing patch-level counterfactual attention maps.",
+      "page": 6,
+      "index": 2,
+      "width": 461,
+      "height": 263
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11258v1/fig-003.webp",
+      "caption": "Figure 3: Main experimental results. (a) Comparison of diagnostic accuracy across three benchmarks. DialecticMed (Orange) consistently outperforms specialized baselines (LLaVA-Med), generalist CoT (GPT-4o), and other agentic frameworks (ReConcile), establishing a new SOTA. (b) Evaluation of hallucination mitigation on the MIMIC-CXR-VQA dataset using CHAIR metrics (Lower is better).",
+      "page": 7,
+      "index": 3,
+      "width": 933,
+      "height": 404
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11258v1/fig-004.webp",
+      "caption": "Figure 1: The overall architecture of Dialectic-Med. The framework orchestrates a structured adversarial debate among three role-specialized agents: Proponent, Opponent, and Mediator. (1) Hypothesis Generation: The Proponent formulates an initial diagnosis based on global context. (2) Visual Falsification: The Opponent utilizes a Visual Falsification Module (VFM) to actively retrieve contradictory visual evidence (counterfactuals) to challenge the hypothesis. (3) Consensus Aggregation: The Mediator adjudicates the conflict and updates a Dynamic Consensus Graph, filtering out hallucinations to derive a robust, visually-grounded final diagnosis.",
+      "page": 3,
+      "index": 4,
+      "width": 950,
+      "height": 448
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11258v1/fig-005.webp",
+      "caption": "Figure 2: Qualitative comparison illustrating the Dialectic-Med inference process. The top panel details our adversarial mechanism: the Proponent forms an initial hypothesis (HP , Pneumonia), while the Opponent generates a counterfactual probe (QO) to actively detect contradictory visual features via the VFM. The bottom panels compare reasoning paradigms: (A) Standard CoT suffers from confirmation bias, ignoring signs of volume loss; (B) Our adversarial dialectic framework successfully corrects the diagnosis to Atelectasis by integrating grounded counter-evidence (ArgO) through a Mediator.",
+      "page": 5,
+      "index": 5,
+      "width": 950,
+      "height": 490
+    }
+  ]
+}

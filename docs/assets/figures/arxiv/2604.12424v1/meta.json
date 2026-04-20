@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.12424v1/fig-001.webp",
+      "caption": "Table 2: Performance evaluation on MMHal-Bench. (a) General results with delta improvements compared to Origin. (b) Detailed scores on the eight categories, where “Overall” indicates the averaged performance.",
+      "page": 11,
+      "index": 1,
+      "width": 725,
+      "height": 471
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12424v1/fig-002.webp",
+      "caption": "Table 1: Performance evaluation on POPE (%). Delta denotes the improvement compared to Origin. Best results are highlighted in bold.",
+      "page": 10,
+      "index": 2,
+      "width": 712,
+      "height": 505
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12424v1/fig-003.webp",
+      "caption": "Fig. 4: Sensitivity of DeP performance to β across different α values with γ fixed to 0.3. We report overall score (a) and hallucination rate (b). The best-performing configuration is marked with red star. The dashed line indicates the results of the current best method (VTI).",
+      "page": 13,
+      "index": 3,
+      "width": 708,
+      "height": 285
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12424v1/fig-004.webp",
+      "caption": "Table 3: Ablation study of DeP components. (a) Results of core components on POPE and MMHal benchmarks. (b) Effectiveness of our Neff strategy against random perturbation ratios p on MMHal. Delta denotes the improvement compared to Origin.",
+      "page": 12,
+      "index": 4,
+      "width": 720,
+      "height": 226
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12424v1/fig-005.webp",
+      "caption": "Fig. 3: Sensitivity analysis of perturbation count M . (a) Score variance decreases as M increases, indicating improved stability in visual decoupling. (b) Inference latency scales linearly with M .",
+      "page": 12,
+      "index": 5,
+      "width": 702,
+      "height": 287
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12424v1/fig-006.webp",
+      "caption": "Fig. 2: Overview of the DeP framework. DeP mitigates language prior-driven hallucinations during inference based on text perturbations. First, DeP utilizes attention consistency statistics across perturbations to decouple visual evidence and suspicious regions for hidden state calibration. Then, it estimates the prior drift direction from perturbed logits, applying it as a penalty to yield the final prediction.",
+      "page": 5,
+      "index": 6,
+      "width": 650,
+      "height": 313
+    }
+  ]
+}

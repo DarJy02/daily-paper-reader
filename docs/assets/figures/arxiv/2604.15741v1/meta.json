@@ -1,0 +1,118 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-001.webp",
+      "caption": "Figure 7: Model architecture of classifier.",
+      "page": 15,
+      "index": 1,
+      "width": 461,
+      "height": 292
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-002.webp",
+      "caption": "Figure 1: Illustration of our SIVR. At each generated token, we extract LLM hidden states, and compute their internal variance, consisting of token entropy, circular variance, and covariance determinant. We utilise these as informative features for sequence classification of response correctness with a simple transformer encoder architecture.",
+      "page": 2,
+      "index": 2,
+      "width": 910,
+      "height": 381
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-003.webp",
+      "caption": "Figure 2: Visualisation of CoE features of correct and wrong answers. Significant overlap indicates CoE features provide poor discriminability.",
+      "page": 2,
+      "index": 3,
+      "width": 458,
+      "height": 310
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-004.webp",
+      "caption": "Table 5: Prompts for each dataset.",
+      "page": 14,
+      "index": 4,
+      "width": 479,
+      "height": 1203
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-005.webp",
+      "caption": "Table 11: Qualitative examples. Red implies contribution to hallucination risk.",
+      "page": 18,
+      "index": 5,
+      "width": 479,
+      "height": 1134
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-006.webp",
+      "caption": "Table 10: Results for individual true-false topics.",
+      "page": 18,
+      "index": 6,
+      "width": 473,
+      "height": 1356
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-007.webp",
+      "caption": "Figure 5: Change in AUC under OOD setting with Ministral-8B-Instruct. Training and test data are on vertical and horizontal axis, respectively.",
+      "page": 8,
+      "index": 7,
+      "width": 950,
+      "height": 281
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-008.webp",
+      "caption": "Figure 4: Performance of proposed features compared to CoE.",
+      "page": 4,
+      "index": 8,
+      "width": 461,
+      "height": 365
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-009.webp",
+      "caption": "Table 13: Failure cases.",
+      "page": 19,
+      "index": 9,
+      "width": 939,
+      "height": 1166
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-010.webp",
+      "caption": "Table 9: Ablation with Llama models.",
+      "page": 17,
+      "index": 10,
+      "width": 943,
+      "height": 354
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-011.webp",
+      "caption": "Figure 8: More OOD performance with Ministral-8B-Instruct.",
+      "page": 17,
+      "index": 11,
+      "width": 950,
+      "height": 619
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-012.webp",
+      "caption": "Table 1: Main results. Cooler color indicates better results, with the best bolded and second best underlined.",
+      "page": 5,
+      "index": 12,
+      "width": 946,
+      "height": 1055
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-013.webp",
+      "caption": "Table 8: Summary of performance with OOD data.",
+      "page": 16,
+      "index": 13,
+      "width": 451,
+      "height": 291
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15741v1/fig-014.webp",
+      "caption": "Table 6: Qwen-3 performance.",
+      "page": 16,
+      "index": 14,
+      "width": 943,
+      "height": 619
+    }
+  ]
+}

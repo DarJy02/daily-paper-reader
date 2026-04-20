@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.12944v1/fig-001.webp",
+      "caption": "Table 2: Summary of video hallucination mitigation strategies. Case: Order/Dur/Freq (Spatiotemporal Dynamics), Char/Scn (Referential Inconsistency), Obj-Act/Scn-Evt (Context-Driven Fabrication), Act/Emo (Audio-Visual Conflict). TF: ✓ = train-free, ✗ = training required. Reported Gain: reported improvement (over baseline) on primary benchmark.",
+      "page": 7,
+      "index": 1,
+      "width": 950,
+      "height": 452
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12944v1/fig-002.webp",
+      "caption": "Figure 2: Mechanism-driven taxonomy of Vid-LLM hallucinations. Dynamic Distortion: entities are perceived but their spatiotemporal evolution or identity is misinterpreted, including Spatiotemporal Dynamics (Order/Dur/Freq) and Referential Inconsistency (Char/Scn). Content Fabrication: outputs lack visual evidence and are driven by priors, including Context-Driven Fabrication (Obj-Act/Scn-Evt) and Audio-Visual Conflict (Act/Emo). Solid fill denotes benchmarks; striped fill indicates mitigation methods.",
+      "page": 3,
+      "index": 2,
+      "width": 944,
+      "height": 550
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12944v1/fig-003.webp",
+      "caption": "Figure 3: Decision checklist for Vid-LLM hallucinations. The Yes branch tracks hallucination detection, while No indicates faithful grounding. Dynamic Distortion: visual evidence exists but relations fail, including Spatiotemporal Dynamics (wrong order, duration, or count) and Referential Inconsistency (identity or scene confusion). Content Fabrication: visuals are absent and outputs rely on priors, including Context-Driven Fabrication (prior-driven completion) and Audio-Visual Conflict (audio contradicts visuals).",
+      "page": 4,
+      "index": 3,
+      "width": 944,
+      "height": 246
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12944v1/fig-004.webp",
+      "caption": "Table 1: Summary of video hallucination benchmarks. Video length and domain act as conditioning factors affecting hallucination severity: longer videos exacerbate referential inconsistency and long-range dynamic distortion, while domain-specific priors influence context-driven fabrication. Format: MC = Multiple Choice, Bin = Yes/No, Open = Open-ended QA, Cap = Captioning. Length: S = Short (<1min), M = Medium (1–5min), L = Long (>5min), St = Streaming. Baseline: Specialized baseline method proposed. SOTA Perf.: Representative best performance reported.",
+      "page": 5,
+      "index": 4,
+      "width": 950,
+      "height": 412
+    }
+  ]
+}

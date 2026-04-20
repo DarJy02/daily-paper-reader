@@ -1,0 +1,514 @@
+Title: Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models
+
+URL Source: https://arxiv.org/pdf/2604.10697v1
+
+Published Time: Tue, 14 Apr 2026 01:37:56 GMT
+
+Number of Pages: 15
+
+Markdown Content:
+# Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+Jakub Binkowski 1 Kamil Adamczewski 1 Tomasz Kajdanowicz 1
+
+## Abstract 
+
+Large language models frequently exhibit hallu-cinations: fluent and confident outputs that are factually incorrect or unsupported by the input context. While recent hallucination detection methods have explored various features derived from attention maps, the underlying mechanisms they exploit remain poorly understood. In this work, we propose SinkProbe , a hallucination de-tection method grounded in the observation that hallucinations are deeply entangled with attention sinks—tokens that accumulate disproportionate attention mass during generation—indicating a transition from distributed, input-grounded atten-tion to compressed, prior-dominated computation. Importantly, although sink scores are computed solely from attention maps, we find that the classi-fier preferentially relies on sinks whose associated value vectors have large norms. Moreover, we show that previous methods implicitly depend on attention sinks by establishing their mathematical relationship to sink scores. Our findings yield a novel hallucination detection method grounded in theory that produces state-of-the-art results across popular datasets and LLMs. 
+
+## 1. Introduction 
+
+Large language models (LLMs) have achieved remark-able success across a wide range of natural language un-derstanding and generation tasks, and are increasingly deployed in settings that require factual reliability, such as question answering, summarization, and decision sup-port (Kwiatkowski et al., 2019; Lin et al., 2022; Zhao et al., 2025). Despite these advances, LLMs remain prone to hal-lucinations —fluent and confident outputs that are factually incorrect, unverifiable, or unsupported by the input con-text (Orgad et al., 2025; Farquhar et al., 2024). 
+
+> 1
+
+Department of Artificial Intelligence, Wroclaw University of Science and Technology. Correspondence to: Jakub Binkowski 
+
+<jakub.binkowski@pwr.edu.pl >.
+
+Preprint. April 14, 2026. 
+
+Hallucinations pose a fundamental challenge to the safe and trustworthy use of LLMs. Unlike traditional task-specific models, modern LLMs operate in open-ended regimes, where errors often manifest as plausible fabrications rather than explicit contradictions (Huang et al., 2025). A number of existing approaches address hallucinations at the output level . These include fact-checking against ex-ternal knowledge sources, retrieval-augmented generation, consistency checks across multiple sampled responses, and uncertainty-based metrics derived from token probabilities or entropy (Ren et al., 2023; Manakul et al., 2023; Farquhar et al., 2024; Fadeeva et al., 2024; Sawczyn et al., 2026). While effective in certain settings, such methods typically require additional resources such as external corpora, or multiple generations, and provide limited insight into the internal computational mechanisms that give rise to halluci-nations. Recently, a complementary line of work has explored in-ternal signals of hallucination by analyzing attention maps, hidden representations, or spectral properties of Transformer Decoder models (Vaswani et al., 2017). These methods ex-ploit the observation that hallucinated generations are often associated with atypical internal representations (Chen et al., 2024; Du et al., 2024), lack of grounding of generations (Chuang et al., 2024; Bazarova et al., 2025), or invalid at-tention dynamics (Sriramanan et al., 2024; Binkowski et al., 2025; Frasca et al., 2026). In this work, we trace hallucina-tions to breakdowns in internal information flow captured by attention sink scores, and show that this perspective both unifies prior detection methods and yields a simple and effective hallucination detector. 
+
+Attention sinks (Xiao et al., 2024; Gu et al., 2025)—tokens attracting disproportionate attention despite low semantic relevance—are a pervasive mechanism for compression and information routing in Transformers (Barbero et al., 2025; Ruscio et al., 2025). We hypothesize that hallucinations may stem from breakdowns in this internal flow, rather than knowledge gaps alone. Consequently, we leverage the attention sink score : an interpretable diagnostic derived from cross-layer attention statistics. This yields a compact, token-agnostic signal for detecting hallucinations. 1
+
+> arXiv:2604.10697v1 [cs.CL] 12 Apr 2026
+
+Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models Sink scores   
+
+> ...
+> Attention matrix
+> hallucination /no hallucination
+
+Figure 1. Pipeline for hallucination detection based on attention sink scores. For each layer l and head h, we compute sink scores s(l,h ),defined as the average of attention scores directed toward each token position. These scores are then sorted, and the top-k values are selected as features. The selected features from all layers and heads are concatenated to form the final feature vector z, which is passed to a hallucination probe – a binary classifier trained on labeled examples to distinguish hallucinated outputs from factually correct ones at inference time. 
+
+Importantly, we show that not all tokens with large atten-tion are equally relevant for hallucination detection. While sink scores are computed solely from attention maps, their computational impact depends on the associated value vec-tors. We find that the hallucination signal is concentrated in tokens where high attention concentration coincides with unusually large value norms—a subset of computationally active tokens that dominate the attention output and induce compressed, prior-dominated representations. We further provide a unifying perspective on existing attention-based hallucination detectors, demonstrating that several spectral and graph-based methods can be interpreted as transformations of sink behavior. Empirically, we show that sink-score–based features achieve superior hallucina-tion detection performance across multiple models and benchmarks, consistently outperforming state-of-the-art hal-lucination detectors. In summary, our main contributions are as follows: • We propose SinkProbe - a novel method for hallucina-tion detection from attention maps. • We identify computationally active sinks, showing that sink-based signals are strongest when attention concen-tration coincides with large value vector norms. • We unify existing attention-based detectors by relating them to sink scores. • We show that sink-score-based features achieve state-of-the-art hallucination detection across several com-mon LLMs and benchmarks. 
+
+## 2. Method 
+
+We leverage the attention sink score, an attention-based measure derived from attention maps that quantifies the concentration of attention on the tokens. Our method op-erates purely on internal attention weights and produces a compact feature representation suitable for hallucination detection. We call this method SinkProbe and introduce it in the following section by first formalizing sink scores at the token, head, and layer levels, then describing how they are aggregated into a probe feature vector. The method is summarized in Figure 1. 
+
+2.1. Attention Sinks 
+
+A pivotal component of our methodology is the attention sink score . We leverage this measure—primarily devel-oped to detect attention sinks (Xiao et al., 2024; Gu et al., 2025), i.e., tokens that accumulate significant attention from future contexts while contributing minimal seman-tic value—to trace the information flow within LLMs. Let 
+
+A(l,h ) ∈ RT ×T denote the attention matrix produced by attention head h ∈ { 1, . . . , H } in layer l ∈ { 1, . . . , L },where A(l,h ) 
+
+> u,i
+
+represents the attention weight from token u
+
+to token i, where u, i ∈ { 1, . . . , T }, and T is the sequence length. Matrix A(l,h ) is row-stochastic and strictly causal, i.e., A(l,h ) 
+
+> u,i
+
+= 0 for all i > u . To quantify sink behavior, we use sink score for each token, as defined by (Gu et al., 2025). 
+
+Definition 2.1 (Sink Score, Gu et al., 2025) . For a given attention head (l, h ), the sink score of token i is defined as 
+
+s(l,h ) 
+
+> i
+
+= 1
+
+T − i
+
+> T
+
+X
+
+> u=i
+
+A(l,h ) 
+
+> u,i
+
+. (1) This quantity measures the average amount of attention to-ken i receives from all subsequent tokens, normalized by the remaining sequence length. High sink scores indicate tokens that persistently attract attention as generation progresses. Sink scores are defined independently for each layer and head, yielding a tensor S ∈ RL×H×T .2Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models        
+
+> (a) GSM8K (b) NQ-Open
+> Figure 2. Relationship between attention output norm differences and layer importance scores for Llama3.2-3B-Instruct on GSM8K (a) and NQ-Open (b). The blue dashed line shows the average difference in attention output norms ∥O(l)
+> u∥2between hallucinated and non-hallucinated examples (left axis), with error bars indicating standard error. The orange solid line shows layer importance scores from the hallucination probe (right axis). Both datasets exhibit alignment in middle layers, where norm differences and importance scores peak together.
+
+2.2. From Sink Scores to Features 
+
+Sink scores typically exhibit a highly skewed distribution: in most attention heads, only a small number of tokens ac-cumulate large scores, while the majority receive negligible attention. Rather than relying on token identity or position, we summarize this structure using order statistics. For each head (l, h ), we sort the sink scores ˜s(l,h ) =sort  s(l,h ), and retain the top-k values. The final feature vector for a given example is constructed by concatenating these values across all layers and heads: 
+
+z =
+
+> L
+
+M
+
+> l=1
+> H
+
+M
+
+> h=1
+
+˜s(l,h ) 
+
+> T
+
+, ˜s(l,h ) 
+
+> T−1
+
+, . . . , ˜s(l,h ) 
+
+> T−k+1
+
+ ∈ RL·H·k. (2) This representation captures the degree of attention concen-tration while remaining agnostic to token semantics and sequence length. To evaluate the predictive power of sink scores, we train a lightweight hallucination probe, i.e., lo-gistic regression classifier. 
+
+2.3. Role of Value Vectors in Attention Sink Behavior 
+
+While attention sink scores characterize the structural con-centration of attention weights in Transformer Decoder, their effect on the model’s computation depends critically on the associated value vectors. For a given attention head (l, h ),the output at token position u is given by 
+
+O(l,h ) 
+
+> u
+
+=
+
+> T
+
+X
+
+> i=1
+
+A(l,h ) 
+
+> u,i
+
+V(l,h )
+
+> i
+
+A token i acting as an attention sink contributes to this out-put in proportion to both its incoming attention mass and the magnitude of its value vector. Attention sinks, which serve to prevent over-mixing (Barbero et al., 2025) and are often associated with semantically vacuous tokens (e.g., the ⟨bos ⟩
+
+token), have been shown to exhibit small value-vector mag-nitudes (Gu et al., 2025). Consequently, a sink with small 
+
+∥V(l,h ) 
+
+> i
+
+∥ exerts limited influence on O(l,h ) 
+
+> u
+
+, even when it attracts substantial attention, whereas a sink with a large value norm can dominate the attention output across multi-ple positions. This distinction implies that only a subset of attention sinks are computationally active —that is, they sig-nificantly influence hidden representations through repeated injection of high-magnitude value vectors. Motivated by this observation, we examined the norms of at-tention outputs ∥O(l,h ) 
+
+> u
+
+∥2. Specifically, we traced these out-put vectors and computed their norms for tokens identified as important by our hallucination probe (see Section 4.1), partitioning the data according to whether each example was hallucinated or non-hallucinated. Figure 2 presents the aggregated norm differences alongside probe importance scores for two selected datasets, stratified by layer. The observed pattern suggests that sink-score–based features primarily capture sinks whose attention concentration co-incides with elevated value magnitudes, rendering them more likely to exert substantial influence on the attention output. Although this association is not universal—as evi-denced by divergent behavior in certain layers—it provides a principled account of why only a subset of attention sinks consistently contributes to hallucination detection, despite the widespread presence of sink behavior across heads and layers. 3Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models    
+
+> Figure 3. Distribution of the mean frequency with which the token with sink score at rank klies in the prompt (averaged over heads), for Llama3.2-3B.
+
+2.4. Sink score as an underlying concept for hallucination detection methods 
+
+In this section, we show that several existing attention-based hallucination detection methods can be interpreted through the lens of attention sink behavior. Although the concepts underlying these methods were originally developed from different motivations and formulated using distinct mathe-matical constructions, we demonstrate that they implicitly rely on the concentration of attention onto sink tokens. This perspective provides a unifying explanation for their ef-fectiveness and clarifies the role of attention collapse as a common underlying signal. 
+
+LLMCheck (Sriramanan et al., 2024) was one of the first methods to leverage attention maps for hallucination detection, proposing AttentionScore, which aggregates per-layer self-attention terms into a scalar hallucination indica-tor. Specifically, for a given layer l, the score is defined as an average log-determinant of its attention maps: AttentionScore (l) = 1
+
+HT 
+
+> H
+
+X
+
+> h=1
+> T
+
+X
+
+> i=1
+
+log( A(l,h ) 
+
+> ii
+
+) (1) If a token has large sink scores, i.e., later tokens attend to it heavily, then their attention mass is concentrated outside the diagonal A(l,h ) 
+
+> ii
+
+, thus decreasing the log-determinant 
+
+> 1
+> T
+
+PTi=1 log( A(l,h ) 
+
+> ii
+
+). Therefore, the tokens absorbing a sub-stantial fraction of the attention mass disproportionately affect this score relative to non-sink tokens. 
+
+LookbackLens (Chuang et al., 2024) proposed to detect contextual hallucinations by comparing attention allocated to the prompt versus attention allocated to the already gen-erated response. The key assumption is that hallucinated generations are less grounded in the prompt, particularly in retrieval-augmented generation (RAG) settings. The central quantity is the lookback ratio. Let |P | be the number of prompt tokens and |R| be the number of response tokens. For each generated token i, define: 
+
+Attn (l,h ) 
+
+> ctx
+
+(i) = 1
+
+|P | 
+
+> |P|
+
+X
+
+> u=1
+
+A(l,h )
+
+> iu
+
+Attn (l,h ) 
+
+> resp
+
+(i) = 1
+
+|R| 
+
+> |P|+|R|
+
+X 
+
+> u=|P|+1
+
+A(l,h )
+
+> iu
+
+Then, lookback ratio LR (l,h ) 
+
+> i
+
+for a layer l and head h is defined as: 
+
+LR (l,h ) 
+
+> i
+
+= Attn (l,h ) 
+
+> resp
+
+(i)
+
+Attn (l,h ) 
+
+> ctx
+
+(i) + Attn (l,h ) 
+
+> resp
+
+(i) (2) Attention sink scores capture complementary, column-wise structure by identifying tokens that consistently attract large amounts of attention across decoding steps. Although sink scores and lookback ratios are not algebraically related, they are coupled through the row-stochastic normalization of attention. When attention concentrates on a small set of sink tokens at a given step, the remaining tokens necessarily receive less attention. This coupling has different implications depending on the lo-cation of the sinks. Sinks among generated tokens promote self-referential attention, increasing Attn (l,h ) 
+
+> resp
+
+and the look-back ratio, and are therefore closely associated with halluci-nated outputs. In contrast, sinks located in the prompt con-centrate attention on a narrow subset of prompt tokens with-out ensuring effective use of the full context. Consequently, prompt sinks reflect attention collapse rather than reliable grounding and do not consistently correspond to reduced hallucination risk. This distinction clarifies why lookback-based detectors are primarily sensitive to generated-token attention collapse, while sink-based diagnostics capture a broader class of attention concentration phenomena. Subsequently, we analyze which parts of the input (prompt vs. response) fall within our proposed top-k sink scores. Figure 3 shows that the highest-ranked sink ( k=0 ) lies al-most exclusively in the prompt across all datasets (mass near 1), consistent with it typically corresponding to ⟨bos ⟩. The next sink ( k=1 ) also falls predominantly in the prompt, with modest dataset-dependent variability. In contrast, lower-ranked sinks ( k≥2) are increasingly likely to occur in the generated answer; this shift is particularly pronounced on GSM8K (and to a lesser extent UMWP), whereas NQ-Open and TruthfulQA retain a substantial prompt contribution. This finding further highlights that later sinks, which are crucial for hallucination detection, often originate from the generated answer rather than purely from the prompt (see Section 4.2 for a study of the effect of k). 4Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+Topological Divergence (Bazarova et al., 2025) intro-duced the TOHA method, which, similarly to Lookback-Lens, relies on the assumption that there is a relationship between prompt and response tokens (the response should be grounded in the prompt) and was designed specifically for RAG scenarios. TOHA formulates the attention map as a weighted graph with edge weights representing a pseudo-distance between tokens, e.g., dij = 1 − aij , where aij denotes the attention weight between token j and token i. Similarly to Look-backLens, tokens are partitioned into prompt tokens P and response tokens R. The method computes probe features based on topological divergence, which in this setting can be reduced to computing the minimum spanning tree (MST) between a collapsed prompt node and the response tokens: 
+
+M T opDiv (P, R ) = X 
+
+> (i,j )∈M ST (P,R )
+
+dij (3) Since sink nodes can induce low pseudo-distances, they are likely to appear in the MST and thus can play a significant role in detection, as also observed in the original work. 
+
+Spectral features (Binkowski et al., 2025) proposed leveraging attention graphs and order statistics of graph Laplacian eigenvalues to detect hallucinations, motivated by the observation that the Laplacian can capture disruptions to information flow within the LLM. Surprisingly, we find that these eigenvalues correspond to sink scores discounted by self-attention. Specifically, given the lower-triangular struc-ture of the attention and Laplacian matrices, the eigenvalues are simply the entries on the main diagonal: 
+
+l(l,h ) 
+
+> ii
+
+= d(l,h ) 
+
+> ii
+
+− a(l,h ) 
+
+> ii
+
+=
+
+PTu=1 a(l,h )
+
+> ui
+
+T − i − a(l,h )
+
+> ii
+
+By noticing the direct correspondence of the first term to the sink score, we can rewrite the eigenvalues as: 
+
+l(l,h ) 
+
+> ii
+
+= s(l,h ) 
+
+> i
+
+− a(l,h )
+
+> ii
+
+This relationship reveals that Laplacian-based features in-herently encode sink score information while additionally discounting self-attention. 
+
+## 3. Experiments 
+
+3.1. Experimental setup Datasets. We evaluate our method on seven diverse hallu-cination detection benchmarks spanning question answer-ing and mathematical reasoning: GSM8K (Cobbe et al., 2021) contains grade school math word problems requiring multi-step reasoning; UMWP (Sun et al., 2024) provides university-level math word problems designed to probe model knowledge boundaries; TruthfulQA (Lin et al., 2022) tests factual accuracy on questions where models commonly produce misconceptions; TriviaQA (Joshi et al., 2017) and 
+
+NQ-Open (Kwiatkowski et al., 2019) evaluate open-domain factual knowledge; SQuADv2 (Rajpurkar et al., 2018) in-cludes reading comprehension questions; and HaluEvalQA 
+
+(Li et al., 2023) provides a targeted hallucination evaluation benchmark. This varied selection ensures our evaluation covers closed-book factual QA, passage-grounded reading comprehension, and mathematical reasoning. Further de-tails on the datasets and their preprocessing are provided in Section B.1. 
+
+LLMs. We evaluate our method on four widely used open-weight LLMs spanning three model families and rang-ing from 3B to 12B parameters: Llama3.2-3B (AI@Meta, 2024), Phi3.5 (4B) (Abdin et al., 2024), Llama3.1-8B (AI@Meta, 2024), and Mistral-Nemo (12B) (Mistral AI Team & NVIDIA, 2024). Further details about the models are provided in Section C. 
+
+Methodology We perform inference on each dataset and, recording generated answers and attention maps. Model responses are evaluated against gold answers using an LLM-as-judge setting, with selective manual review to ensure label quality. Then, we extract features for SinkProbe and baselines, and train a logistic regression hallucination probe, reporting ROC-AUC metric from 5-fold cross-validation. Methodology and implementation details are provided in Section A. 
+
+Baselines. We compare SinkProbe against several attention-based hallucination detection baselines: (1) AttentionScore (Sriramanan et al., 2024), an unsupervised method that computes the log-determinant of attention ma-trices aggregated across layers and heads, with ROC-AUC measured directly on raw scores; (2) AttnLogDet , a super-vised counterpart of AttentionScore that uses attention log-determinants as features for a trained hallucination probe; (3) AttnEigvals and (4) LapEigval (Binkowski et al., 2025), which extract the top-k eigenvalues of attention and Lapla-cian matrices, respectively; (5) LookbackLens (Chuang et al., 2024), which measures the ratio of attention attributed to context; and (6) MTopDiv (Bazarova et al., 2025), which leverages topological features of attention graphs. All base-lines except the unsupervised AttentionScore use the same logistic regression probe architecture and training protocol to ensure fair comparison. 
+
+3.2. Results 
+
+We report results for SinkProbe and the compared base-lines in Table 1, where values denote the mean and stan-5Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+Table 1. Results of hallucination detection experiments, the values represent mean and standard deviation of ROC-AUC scores over 5-fold cross-validation, ∆ represents relative improvement of SinkProbe compared with second best or best performing method. Dataset GSM8K HaluEvalQA NQ-Open SQuADv2 TriviaQA TruthfulQA UMWP LLM Feature Llama3.2-3B AttnScore 0.743 ± 0.049 0.737 ± 0.015 0.661 ± 0.027 0.637 ± 0.027 0.672 ± 0.013 0.667 ± 0.041 0.702 ± 0.017 AttnLogDet 0.819 ± 0.010 0.817 ± 0.012 0.723 ± 0.014 0.739 ± 0.009 0.789 ± 0.009 0.771 ± 0.048 0.809 ± 0.017 
+
+AttnEigval 0.802 ± 0.025 0.817 ± 0.014 0.732 ± 0.024 0.738 ± 0.027 0.798 ± 0.017 0.765 ± 0.030 0.704 ± 0.025 LapEigval 0.825 ± 0.009 0.837 ± 0.011 0.736 ± 0.012 0.753 ± 0.014 0.824 ± 0.017 0.748 ± 0.047 0.720 ± 0.010 LookbackLens 0.835 ± 0.017 0.836 ± 0.009 0.743 ± 0.020 0.765 ± 0.008 0.811 ± 0.015 0.741 ± 0.072 0.749 ± 0.020 MTopDiv 0.816 ± 0.026 0.846 ± 0.009 0.754 ± 0.012 0.764 ± 0.010 0.827 ± 0.018 0.757 ± 0.044 0.735 ± 0.017 SinkProbe 0.845 ± 0.017 0.847 ± 0.008 0.758 ± 0.016 0.769 ± 0.010 0.835 ± 0.017 0.785 ± 0.059 0.757 ± 0.017 
+
+∆ +1.2% +0.1% +0.5% +0.5% +1.0% +1.8% -6.4% Phi3.5 AttnScore 0.741 ± 0.069 0.712 ± 0.009 0.729 ± 0.022 0.678 ± 0.015 0.705 ± 0.016 0.693 ± 0.045 0.757 ± 0.022 AttnLogDet 0.782 ± 0.058 0.805 ± 0.006 0.801 ± 0.011 0.760 ± 0.016 0.837 ± 0.004 0.774 ± 0.044 0.864 ± 0.023 AttnEigval 0.794 ± 0.055 0.803 ± 0.004 0.779 ± 0.006 0.750 ± 0.023 0.833 ± 0.006 0.770 ± 0.025 0.864 ± 0.017 LapEigval 0.775 ± 0.047 0.822 ± 0.006 0.820 ± 0.020 0.767 ± 0.017 0.859 ± 0.003 0.755 ± 0.046 0.862 ± 0.025 LookbackLens 0.843 ± 0.028 0.828 ± 0.004 0.816 ± 0.015 0.767 ± 0.020 0.850 ± 0.006 0.773 ± 0.043 0.877 ± 0.021 MTopDiv 0.845 ± 0.035 0.835 ± 0.005 0.818 ± 0.022 0.780 ± 0.022 0.866 ± 0.006 0.797 ± 0.043 0.872 ± 0.019 SinkProbe 0.854 ± 0.021 0.846 ± 0.004 0.821 ± 0.011 0.764 ± 0.019 0.877 ± 0.006 0.761 ± 0.046 0.896 ± 0.015 
+
+∆ +1.1% +1.3% +0.1% -2.1% +1.3% -4.5% +2.2% Llama3.1-8B AttnScore 0.752 ± 0.048 0.770 ± 0.012 0.677 ± 0.017 0.656 ± 0.019 0.678 ± 0.011 0.704 ± 0.026 0.722 ± 0.026 AttnLogDet 0.812 ± 0.034 0.849 ± 0.015 0.759 ± 0.018 0.752 ± 0.022 0.827 ± 0.014 0.765 ± 0.041 0.825 ± 0.024 AttnEigval 0.797 ± 0.037 0.850 ± 0.011 0.759 ± 0.029 0.761 ± 0.012 0.835 ± 0.008 0.773 ± 0.042 0.818 ± 0.021 LapEigval 0.826 ± 0.029 0.878 ± 0.009 0.787 ± 0.027 0.785 ± 0.024 0.874 ± 0.013 0.757 ± 0.068 0.834 ± 0.016 LookbackLens 0.816 ± 0.042 0.879 ± 0.007 0.776 ± 0.024 0.776 ± 0.019 0.868 ± 0.012 0.767 ± 0.040 0.838 ± 0.017 MTopDiv 0.803 ± 0.036 0.881 ± 0.005 0.772 ± 0.021 0.787 ± 0.018 0.874 ± 0.009 0.775 ± 0.047 0.809 ± 0.014 SinkProbe 0.824 ± 0.025 0.890 ± 0.005 0.789 ± 0.026 0.798 ± 0.020 0.883 ± 0.012 0.778 ± 0.042 0.879 ± 0.009 
+
+∆ -0.2% +1.0% +0.3% +1.4% +1.0% +0.4% +4.9% Mistral-Nemo AttnScore 0.712 ± 0.058 0.688 ± 0.013 0.666 ± 0.016 0.641 ± 0.019 0.659 ± 0.018 0.678 ± 0.053 0.773 ± 0.026 AttnLogDet 0.797 ± 0.063 0.797 ± 0.006 0.750 ± 0.019 0.749 ± 0.013 0.810 ± 0.013 0.798 ± 0.048 0.847 ± 0.018 AttnEigval 0.780 ± 0.062 0.791 ± 0.008 0.730 ± 0.026 0.745 ± 0.015 0.815 ± 0.014 0.779 ± 0.056 0.826 ± 0.017 LapEigval 0.804 ± 0.049 0.831 ± 0.005 0.765 ± 0.028 0.777 ± 0.019 0.860 ± 0.003 0.806 ± 0.042 0.847 ± 0.007 LookbackLens 0.841 ± 0.063 0.837 ± 0.009 0.782 ± 0.022 0.783 ± 0.014 0.866 ± 0.009 0.804 ± 0.039 0.866 ± 0.017 MTopDiv 0.813 ± 0.062 0.837 ± 0.009 0.776 ± 0.025 0.770 ± 0.012 0.865 ± 0.007 0.811 ± 0.030 0.841 ± 0.005 SinkProbe 0.811 ± 0.036 0.849 ± 0.008 0.787 ± 0.026 0.790 ± 0.011 0.878 ± 0.008 0.821 ± 0.052 0.876 ± 0.011 
+
+∆ -3.6% +1.4% +0.6% +0.9% +1.4% +1.2% +1.2% 
+
+dard deviation of ROC-AUC over 5-fold cross-validation. Across all evaluated datasets and model families, SinkProbe achieves the best performance in 23 of 28 model-dataset pairs, indicating that sink score-based features provide a robust signal for hallucination detection. The method per-forms consistently well across diverse tasks and domains (question answering and mathematical reasoning) and across models of varying scale (from 3B up to 12B parameters). Although LookbackLens , MTopDiv , and LapEigval often achieve competitive performance, all three are conceptually related to SinkProbe . In contrast, Sinkrobe is a simpler, more general diagnostic: it delivers stronger average per-formance while identifying sink scores as a simple, direct, and unifying signal underlying several prior attention-based approaches. 
+
+## 4. Analysis 
+
+To provide deeper insight into SinkProbe , this section ana-lyzes which features drive hallucination detection. Through-out our experiments, we use models of varying sizes from the Mistral and Llama families (Mistral-Nemo and Llama3.2-3B), evaluated on four datasets: NQ-Open and TruthfulQA (question answering), and GSM8K and UMWP (mathematical reasoning). 
+
+4.1. Sink-feature importance in hallucination detection 
+
+Recall that hallucination detection in SinkProbe is formu-lated as a classification problem over a feature vector de-rived from attention sink scores. For each attention head, we retain the top-k largest sink scores and concatenate them across all heads and layers to obtain a fixed-dimensional representation, which is then fed to a logistic regression probe. To determine the importance of each sink score, we examine the probe’s learned coefficients. To conduct analy-sis, we train the probe with ℓ1 regularization to encourage sparsity in the coefficients while maintaining comparable performance to the unregularized setting 1. Let β(l,h ) 
+
+> i
+
+denote the logisitic regression coefficient associated with the i-th largest sink score in layer l and head h. For each model-dataset pair, we count the number of non-zero coefficients and report the results in Table 2. Notably, the probe retains only a small subset of features—between 1% and 4% of all 
+
+> 1
+
+To corroborate these findings with an alternative interpretabil-ity method, we performed a similar analysis using SHAP (Lund-berg & Lee, 2017). While SHAP distributes importance across a broader set of features, the highest-ranked features largely overlap with those identified by the ℓ1-regularized model. 
+
+6Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models                              
+
+> Table 2. Number of non-zero coefficients in the Logistic Regres-sion model trained with ℓ1regularization, i.e., number of sink score features selected for hallucination detection.
+> Total Features Total Important LLM Dataset Llama3.2-3B GSM8K 6720 38 (1%) NQ-Open 6720 204 (3%) TruthfulQA 6720 58 (1%) UMWP 6720 228 (3%) Mistral-Nemo GSM8K 12800 82 (1%) NQ-Open 12800 510 (4%) TruthfulQA 12800 110 (1%) UMWP 12800 177 (1%)
+> Figure 4. Importance scores of attention sinks derived from an
+> ℓ1-regularized probe, aggregated across heads and sink indices per layer: Il=P
+> h
+> P
+> i|β(l,h )
+> i|. Scores are plotted against relative layer depth to facilitate cross-model comparison.
+
+sink-score features – corresponding to a few dozen to a few hundred coefficients. Next, we study how sink-score importance is distributed across network depth. For each layer l, we define aggregate attention sink importance by summing the absolute values of coefficients associated with that layer, 
+
+Il = X
+
+> h
+
+X
+
+> i
+
+β(l,h ) 
+
+> i
+
+.
+
+We visualize the resulting distribution in Figure 4. We find that informative aggregate importance sink scores are dis-tributed across multiple layers, with the middle and final layers contributing most strongly. In light of recent work proposing a mix–compress–refine paradigm of LLM com-putation (de Llano et al., 2026), this pattern suggests that heightened information mixing in intermediate and final layers may be a key driver of hallucination-related signals. This over-mixing could be caused by the atypically large value norms, which we examined in Section 2.3. 
+
+4.2. How does top-k affect hallucination detection? 
+
+In this study, we compare SinkProbe with other probing approaches that rely on top-k feature selection, namely AttnEigvals and LapEigval . Figure 5 shows how halluci-nation detection performance varies with increasing k. We observe that both LapEigval and SinkProbe achieve their best or near-best performance for small values of k (k < 10 ), whereas raw AttnEigvals improves more gradually with in-creasing k but does not surpass either method. Notably, SinkProbe exhibits a pronounced performance gain for k
+
+between 2 and 5, indicating that hallucination-related infor-mation is highly concentrated in a small number of dominant sinks. This behavior highlights a key advantage of sink-score fea-tures over prior attention- and spectral-based representa-tions. While methods such as AttnEigvals and LapEigval rely on more global aggregation of attention structure, sink scores isolate the most extreme attention attractors, yielding a more direct and robust signal. In particular, the leading sink often corresponds to the ⟨bos ⟩ token (see Figure 3), which already provides a strong hallucination signal, further strengthened by incorporating a small number of additional sinks. Consistent with prior work highlighting the role of attention sinks in information flow (Barbero et al., 2025; de Llano et al., 2026), our results suggest that anomalies in this flow—manifested as disproportionate attention to non-informative tokens—are closely associated with hal-lucinated outputs. This provides a mechanistic interpreta-tion of why sink-score features capture hallucination-related behavior more effectively than alternative attention-based descriptors. 
+
+## 5. Related Work 
+
+Information flow in LLMs Recently, there has been a surge of research analyzing the intricacies of LLMs from the perspective of information flow. In particular, inter-preting attention maps as learned adjacency operators es-tablishes a natural bridge between Transformers (Vaswani et al., 2017) and Graph Neural Networks (Hamilton, 2020): both propagate information through iterative mixing gov-erned by an underlying graph structure (Arroyo et al., 2025). (Barbero et al., 2024; 2025) showed that over-squashing – a bottleneck phenomenon extensively studied in GNNs – can either impair information propagation or prevent exces-sive over-mixing. Beyond theoretical insights, this graph-theoretic framing opens the door to applying spectral, topo-logical, and message-passing tools to analyze model inter-nals (Binkowski et al., 2025; Bazarova et al., 2025; Frasca et al., 2026). In this work, we focus on one dimension of information flow in LLMs, as quantified by the sink score metric, to detect hallucinations. 7Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models             
+
+> (a) GSM8K (b) UMWP (c) NQ-Open (d) TruthfulQA
+> Figure 5. Influence of k. Varying the number of retained sink scores per head, we find that SinkProbe attains best or near-best performance even for small values of k. This suggests that hallucination-related signals are concentrated in a few dominant sinks and that sink-score features capture this signal more directly and robustly than existing attention- or spectral-based representations. The presented results are for Llama3.2-3B, for other models and datasets see Section D.
+
+Hallucination Detection via Attention Signals The in-terpretability afforded by attention-based analysis has mo-tivated a line of work on detecting hallucinations in Trans-former Decoder models (Vaswani et al., 2017) – fluent out-puts unsupported by input or factual knowledge (Alansari & Luqman, 2026). (Sriramanan et al., 2024) propose an at-tention score aggregating diagonal self-attention, observing lower values for hallucinated generations. (Chuang et al., 2024) introduce the LookbackLens, contrasting attention to prompt versus response tokens to detect contextual halluci-nations. Graph-based approaches have also proven effective: spectral features from Laplacian eigenvalues (Binkowski et al., 2025), topological features (Bazarova et al., 2025; Samaga et al., 2026), and neural message-passing on atten-tion graphs (Frasca et al., 2026) each capture complementary aspects of attention structure. Although these methods were developed from distinct motivations, we show in this work that some of them share a common dependence on atten-tion sink behavior – a unifying perspective that motivates our sink-score-based approach and clarifies the mechanistic basis of attention-based detection. 
+
+Attention Sinks A striking regularity observed across Transformer architectures is the emergence of attention sinks – tokens that attract disproportionate attention mass from subsequent positions regardless of semantic relevance. First identified in the context of efficient streaming infer-ence (Xiao et al., 2024), attention sinks have since been shown to emerge universally during pretraining (Gu et al., 2025). Rather than a pathology, recent work suggests sinks serve a functional role: (Barbero et al., 2025) argue they pre-vent over-mixing by providing a stable routing target, while (Ruscio et al., 2025) offer a geometric characterization of sink formation. (de Llano et al., 2026) unify attention sinks with the related phenomenon of compression valleys, show-ing both arise from massive activations in middle layers and reflect a transition from broad mixing to compressed com-putation. In this work, we show that commonly used metric for measuring a ”sinkness”, i.e., sink score, can provide rich signal to detect hallucinations. 
+
+## 6. Conclusion 
+
+We introduce SinkProbe , a simple and effective method for hallucination detection based on attention sink scores. Across a broad range of models and benchmarks, sink-score features provide strong predictive signals and consistently outperform prior attention-based baselines, supporting the view that attention sinks constitute a key internal correlate of hallucination. Beyond raw performance, our analysis shows that the probe relies on a small subset of heads and layers, indicating a relatively localized internal signature that can be inspected and compared across models. Moreover, we find that this localized signal often correlates with anomalous self-attention value norms, suggesting that hallucinations are closely tied to recent insights into LLM internal dynamics. Overall, we argue that describing infor-mation flow in LLMs through the lens of sink scores offers a more fundamental perspective on hallucination detection. In this view, several existing methods can be understood as im-plicitly leveraging the concept of attention sinks, positioning sink scores as a unifying underlying signal. An important limitation is that our method requires access to attention weights, hence efficient deployment of the method would require specialized kernel. Moreover, while sink scores are interpretable, they are a correlational signal and do not by themselves establish that sinks are causal drivers of hallucinations. A promising direction is to connect de-tection with intervention by testing whether manipulating sink formation (e.g., via head ablations or targeted regular-ization) can reduce hallucinations without degrading task performance. 
+
+## Impact Statement 
+
+Hallucinations in large language models can lead to mis-information, overconfident errors in decision support, and degraded user trust. This work contributes a lightweight detector, which can support safer deployment by enabling monitoring, selective abstention, and evaluation of mitiga-tion strategies without relying on external retrieval or re-8Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+peated sampling. More broadly, our sink-based perspective may help further mechanistic research into how attention routing and information flow relate to hallucinations and other failure modes in LLMs. 
+
+## Acknowledgments 
+
+We gratefully acknowledge the Wroclaw Centre for Networking and Supercomputing and Polish high-performance computing infrastructure PLGrid (HPC Cen-ter: ACK Cyfronet AGH) for providing computer facilities and support within computational grant no. PLG/2025/018640(grant number PLG/2025/018640). This work was co-funded by the National Science Centre, Poland under CHIST-ERA Open & Re-usable Research Data & Software (grant number 2022/04/Y/ST6/00183). 
+
+## References 
+
+Abdin, M. et al. Phi-3 technical report: A highly capa-ble language model locally on your phone, 2024. URL 
+
+https://arxiv.org/abs/2404.14219 .AI@Meta. The llama 3 herd of models, 2024. URL https: //arxiv.org/abs/2407.21783 .Alansari, A. and Luqman, H. Large language models hallucination: A comprehensive sur-vey. Computer Science Review , 61:100970, 2026. doi: 10.1016/j.cosrev.2026.100970. URL https://www.sciencedirect.com/ science/article/pii/S157401372600078X .Arroyo, A., Barbero, F., Blayney, H., Bronstein, M., Dong, X., Li `o, P., Pascanu, R., and Vandergheynst, P. Bridging graph neural networks and large lan-guage models: A survey and unified perspective, 2025. URL https://openreview.net/forum? id=6FVeg8EMMz . OpenReview preprint. Barbero, F., Banino, A., Kapturowski, S., Kumaran, D., Ara ´ujo, J. G. M., Vitvitskyi, A., Pascanu, R., and Veli ˇckovi ´c, P. Transformers need glasses! Information over-squashing in language tasks. In Advances in Neural Information Processing Systems , volume 37, 2024. Barbero, F., Arroyo, A., Gu, X., Perivolaropoulos, C., Veli ˇckovi ´c, P., Pascanu, R., and Bronstein, M. M. Why do LLMs attend to the first token? In Second Con-ference on Language Modeling , 2025. URL https: //openreview.net/forum?id=tu4dFUsW5z .Bazarova, A., Yugay, A., Shulga, A., Ermilova, A., Volodichev, A., Polev, K., Belikova, J., Parchiev, R., Simakov, D., Savchenko, M., et al. Hallucination de-tection in llms with topological divergence on attention graphs. arXiv preprint arXiv:2504.10063 , 2025. Binkowski, J., Janiak, D., Sawczyn, A., Gabrys, B., and Kajdanowicz, T. J. Hallucination detection in LLMs using spectral features of attention maps. In Christodoulopoulos, C., Chakraborty, T., Rose, C., and Peng, V. (eds.), Proceedings of the 2025 Conference on Empirical Methods in Natural Language Process-ing , pp. 24365–24396, Suzhou, China, November 2025. Association for Computational Linguistics. ISBN 979-8-89176-332-6. doi: 10.18653/v1/2025.emnlp-main. 1239. URL https://aclanthology.org/2025. emnlp-main.1239/ .Chen, C., Liu, K., Chen, Z., Gu, Y., Wu, Y., Tao, M., Fu, Z., and Ye, J. INSIDE: LLMs’ internal states retain the power of hallucination detection. In The Twelfth International Conference on Learning Representations ,2024. URL https://openreview.net/forum? id=Zj12nzlQbz .Chuang, Y.-S., Qiu, L., Hsieh, C.-Y., Krishna, R., Kim, Y., and Glass, J. Lookback lens: Detecting and mitigat-ing contextual hallucinations in large language models using only attention maps. In Proceedings of the 2024 Conference on Empirical Methods in Natural Language Processing , pp. 1419–1436, 2024. Cobbe, K., Kosaraju, V., Bavarian, M., Chen, M., Jun, H., Kaiser, L., Plappert, M., Tworek, J., Hilton, J., Nakano, R., Hesse, C., and Schulman, J. Training verifiers to solve math word problems, 2021. URL https://arxiv. org/abs/2110.14168 .de Llano, E. Q., Arroyo, A., Barbero, F., Dong, X., Bron-stein, M. M., LeCun, Y., and Shwartz-Ziv, R. Attention sinks and compression valleys in LLMs are two sides of the same coin. In The Fourteenth International Confer-ence on Learning Representations , 2026. URL https: //openreview.net/forum?id=c5TFhCJ6fs .Du, X., Xiao, C., and Li, Y. Haloscope: Harnessing unla-beled llm generations for hallucination detection. In Ad-vances in Neural Information Processing Systems , 2024. Fadeeva, E., Rubashevskii, A., Shelmanov, A., Petrakov, S., Li, H., Mubarak, H., Tsymbalov, E., Kuzmin, G., Panchenko, A., Baldwin, T., Nakov, P., and Panov, M. Fact-checking the output of large language models via token-level uncertainty quantification. In Ku, L.-W., Mar-tins, A., and Srikumar, V. (eds.), Findings of the Associa-tion for Computational Linguistics: ACL 2024 , pp. 9367– 9385, Bangkok, Thailand, August 2024. Association for Computational Linguistics. doi: 10.18653/v1/2024. findings-acl.558. URL https://aclanthology. org/2024.findings-acl.558/ .9Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+Farquhar, S., Kossen, J., Kuhn, L., and Gal, Y. Detecting hallucinations in large language models using semantic entropy. Nature , 630(8017):625–630, June 2024. Frasca, F., Bar-Shalom, G., Ziser, Y., and Maron, H. Neural message-passing on attention graphs for hallucination detection. In The Fourteenth International Conference on Learning Representations , 2026. URL https:// openreview.net/forum?id=4twbqwV4br .Gao, L., Tow, J., Abbasi, B., Biderman, S., Black, S., DiPofi, A., Foster, C., Golding, L., Hsu, J., Le Noac’h, A., Li, H., McDonell, K., Muennighoff, N., Ociepa, C., Phang, J., Reynolds, L., Schoelkopf, H., Skowron, A., Sutawika, L., Tang, E., Thite, A., Wang, B., Wang, K., and Zou, A. The language model evaluation harness, 07 2024. URL 
+
+https://zenodo.org/records/12608602 .Gu, X., Pang, T., Du, C., Liu, Q., Zhang, F., Du, C., Wang, Y., and Lin, M. When attention sink emerges in lan-guage models: An empirical view. In The Thirteenth International Conference on Learning Representations ,2025. URL https://openreview.net/forum? id=78Nn4QJTEN .Hamilton, W. L. Graph representation learning. Synthesis Lectures on Artificial Intelligence and Machine Learning ,14(3):1–159, 2020. He, H. and Lab, T. M. Defeating nondeter-minism in llm inference. Thinking Machines Lab: Connectionism , 2025. doi: 10.64434/tml. 20250910. https://thinkingmachines.ai/blog/defeating-nondeterminism-in-llm-inference/. Huang, L., Yu, W., Ma, W., Zhong, W., Feng, Z., Wang, H., Chen, Q., Peng, W., Feng, X., Qin, B., and Liu, T. A survey on hallucination in large language models: Prin-ciples, taxonomy, challenges, and open questions. ACM Transactions on Information Systems , 43(2):1–55, Jan-uary 2025. ISSN 1046-8188. doi: 10.1145/3703155. URL https://doi.org/10.1145/3703155 .Joshi, M., Choi, E., Weld, D. S., and Zettlemoyer, L. Trivi-aqa: A large scale distantly supervised challenge dataset for reading comprehension. In Proceedings of the 55th Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 1601–1611, 2017. Kwiatkowski, T., Palomaki, J., Redfield, O., Collins, M., Parikh, A., Alberti, C., Epstein, D., Polosukhin, I., De-vlin, J., Lee, K., Toutanova, K., Jones, L., Kelcey, M., Chang, M.-W., Dai, A. M., Uszkoreit, J., Le, Q., and Petrov, S. Natural questions: A benchmark for question answering research. In Transactions of the Association for Computational Linguistics , volume 7, pp. 452–466, 2019. Li, J., Cheng, X., Zhao, W. X., Nie, J.-Y., and Wen, J.-R. Halueval: A large-scale hallucination evaluation bench-mark for large language models. In Proceedings of the 2023 Conference on Empirical Methods in Natural Lan-guage Processing , pp. 6449–6464, 2023. Lin, S., Hilton, J., and Evans, O. Truthfulqa: Measuring how models mimic human falsehoods. In Proceedings of the 60th Annual Meeting of the Association for Compu-tational Linguistics (Volume 1: Long Papers) , pp. 3214– 3252, 2022. Lundberg, S. M. and Lee, S.-I. A unified approach to inter-preting model predictions. In Proceedings of the 31st In-ternational Conference on Neural Information Processing Systems , NIPS’17, pp. 4768–4777, Red Hook, NY, USA, 2017. Curran Associates Inc. ISBN 9781510860964. Manakul, P., Liusie, A., and Gales, M. Selfcheckgpt: Zero-resource black-box hallucination detection for genera-tive large language models. In Proceedings of the 2023 conference on empirical methods in natural language processing , pp. 9004–9017, 2023. Mistral AI Team and NVIDIA. Mistral-nemo-instruct-2407, 2024. URL https://huggingface.co/ mistralai/Mistral-Nemo-Instruct-2407 .Orgad, H., Toker, M., Gekhman, Z., Reichart, R., Szpek-tor, I., Kotek, H., and Belinkov, Y. LLMs know more than they show: On the intrinsic representation of LLM hallucinations. In The Thirteenth International Confer-ence on Learning Representations , 2025. URL https: //openreview.net/forum?id=KRnsX5Em3W .Pedregosa, F., Varoquaux, G., Gramfort, A., Michel, V., Thirion, B., Grisel, O., Blondel, M., Prettenhofer, P., Weiss, R., Dubourg, V., Vanderplas, J., Passos, A., Cour-napeau, D., Brucher, M., Perrot, M., and Duchesnay, E. Scikit-learn: Machine learning in Python. Journal of Machine Learning Research , 12:2825–2830, 2011. Rajpurkar, P., Jia, R., and Liang, P. Know what you don’t know: Unanswerable questions for squad. In Proceed-ings of the 56th Annual Meeting of the Association for Computational Linguistics (Volume 2: Short Papers) , pp. 784–789, 2018. Ren, J., Luo, J., Zhao, Y., Krishna, K., Saleh, M., Lak-shminarayanan, B., and Liu, P. J. Out-of-distribution detection and selective generation for conditional lan-guage models. In The Eleventh International Confer-ence on Learning Representations , 2023. URL https: //openreview.net/forum?id=kJUS5nD0vPB .Ruscio, V., Nanni, U., and Silvestri, F. What are you sinking? a geometric approach on attention sink. In 10 Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+The Thirty-ninth Annual Conference on Neural Infor-mation Processing Systems , 2025. URL https:// openreview.net/forum?id=OiC78C68sJ .Samaga, S. N., Arroyo, G. G., and Dey, T. K. HalluZig: Hallucination detection using zigzag persistence. In Pro-ceedings of the 19th Conference of the European Chapter of the Association for Computational Linguistics (Volume 1: Long Papers) , pp. 3466–3482, Rabat, Morocco, March 2026. Association for Computational Linguistics. ISBN 979-8-89176-380-7. doi: 10.18653/v1/2026.eacl-long. 159. URL https://aclanthology.org/2026. eacl-long.159/ .Sawczyn, A., Binkowski, J., Janiak, D., Gabrys, B., and Kajdanowicz, T. J. FactSelfCheck: Fact-level black-box hallucination detection for LLMs. In Demberg, V., Inui, K., and Marquez, L. (eds.), Findings of the As-sociation for Computational Linguistics: EACL 2026 ,pp. 5603–5621, Rabat, Morocco, March 2026. As-sociation for Computational Linguistics. ISBN 979-8-89176-386-9. doi: 10.18653/v1/2026.findings-eacl. 296. URL https://aclanthology.org/2026. findings-eacl.296/ .Sriramanan, G., Bharti, S., Sadasivan, V. S., Saha, S., Kat-takinda, P., and Feizi, S. Llm-check: investigating de-tection of hallucinations in large language models. In 
+
+Proceedings of the 38th International Conference on Neural Information Processing Systems , NIPS ’24, Red Hook, NY, USA, 2024. Curran Associates Inc. ISBN 9798331314385. Sun, Y., Yin, Z., Guo, Q., Wu, J., Qiu, X., and Zhao, H. Benchmarking hallucination in large language models based on unanswerable math word problem. In Calzo-lari, N., Kan, M.-Y., Hoste, V., Lenci, A., Sakti, S., and Xue, N. (eds.), Proceedings of the 2024 Joint Interna-tional Conference on Computational Linguistics, Lan-guage Resources and Evaluation (LREC-COLING 2024) ,pp. 2178–2188, Torino, Italia, May 2024. ELRA and ICCL. URL https://aclanthology.org/2024. lrec-main.196/ .Vaswani, A., Shazeer, N., Parmar, N., Uszkoreit, J., Jones, L., Gomez, A. N., Kaiser, L., and Polosukhin, I. Attention is all you need. In Proceedings of the 31st International Conference on Neural Information Processing Systems ,NIPS’17, pp. 6000–6010, Red Hook, NY, USA, 2017. Curran Associates Inc. ISBN 9781510860964. Wolf, T., Debut, L., Sanh, V., Chaumond, J., Delangue, C., Moi, A., Cistac, P., Rault, T., Louf, R., Funtowicz, M., Davison, J., Shleifer, S., von Platen, P., Ma, C., Jer-nite, Y., Plu, J., Xu, C., Scao, T. L., Gugger, S., Drame, M., Lhoest, Q., and Rush, A. M. Transformers: State-of-the-art natural language processing. In Proceedings of the 2020 Conference on Empirical Methods in Natu-ral Language Processing: System Demonstrations , pp. 38–45, Online, October 2020. Association for Compu-tational Linguistics. URL https://www.aclweb. org/anthology/2020.emnlp-demos.6 .Xiao, G., Tian, Y., Chen, B., Han, S., and Lewis, M. Ef-ficient streaming language models with attention sinks. In The Twelfth International Conference on Learning Representations , 2024. URL https://openreview. net/forum?id=NG7sS51zVF .Zhao, H., Liu, Z., Wu, Z., Li, Y., Yang, T., Shu, P., Xu, S., Dai, H., Zhao, L., Jiang, H., Pan, Y., Chen, J., Zhou, Y., Zhang, Z., Sun, R., Mai, G., Liu, N., and Liu, T. Revolutionizing finance with llms: An overview of ap-plications and insights, 2025. URL https://arxiv. org/abs/2401.11641 .11 Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+## A. Methodology and implementation details 
+
+In our empirical study, we closely follow the methodology of (Binkowski et al., 2025), with three key modifications: (1) incorporating the UMWP dataset (Sun et al., 2024) to extend coverage to reasoning tasks, (2) employing cross-validation to improve reliability, and (3) removing the PCA component to enhance interpretability and facilitate analysis of the trained model. Our conclusions remain consistent regardless of whether PCA is applied. For logistic regression, we used the scikit-learn implementation (Pedregosa et al., 2011) with max iter=1000 and 
+
+class weight=balanced , leaving all other parameters at their default values. LLM inference was performed using the Transformers library (Wolf et al., 2020) on NVIDIA A40 GPUs and A100 GPUs (48GB and 80GB VRAM, respectively). Our implementation, including model and prompt configurations, is available in the supplementary materials. We perform inference on each dataset and recorded both the generated answers and the model’s internal states, namely attention maps. We then employ gpt-4.1 in an LLM-as-judge setting to evaluate model responses against gold answers for all datasets except GSM8K, where answers were verified programmatically. To ensure high-quality hallucination labels, we manually reviewed a random sample of the judge’s evaluations. We exclude examples that exceeded the maximum token limit ( 2,048 for reasoning tasks; the maximum answer length for QA datasets) or lacked a verifiable answer. Dataset statistics are provided in Section B.2. Subsequently, we extract features and use them to train a logistic regression hallucination probe, reporting results for the optimal value of the k hyperparameter. We employ 5-fold cross-validation, ensuring identical fold partitions across all methods for fair comparison. 
+
+## B. Dataset details 
+
+B.1. Upstream dataset details 
+
+Here, we provide details on QA and reasoning datasets used to generate hallucination datasets. We selected them based on their prevalence in the literature regarding hallucination in LLMs. Further details are provided in Table 3.  
+
+> Table 3. Detailed references for the datasets used in the experiments. ( †Preprocessed following Chen et al. (2024)).
+
+Dataset Split / Subset # Examples Source 
+
+NQ-Open (Kwiatkowski et al., 2019) Validation 3,610 huggingface TriviaQA † (Joshi et al., 2017) Validation 7,983 huggingface SQuADv2 † (Rajpurkar et al., 2018) Dev ( rc.nocontext ) 9,960 official website HaluEvalQA (Li et al., 2023) QA 10,000 official repository TruthfulQA (Lin et al., 2022) Generation 817 huggingface GSM8k (Cobbe et al., 2021) Test 1,319 huggingface UMWP (Sun et al., 2024) (entire dataset) 5,200 official repository 
+
+B.2. Details of hallucination dataset generation 
+
+We followed the experimental pipeline from the main text to construct hallucination labels for all benchmarks. For each dataset, we ran model inference and stored the generated answers together with attention maps. We then used gpt-4.1 
+
+as an LLM-as-judge to compare each answer against the gold reference and assign a hallucination label. For GSM8K, correctness was verified programmatically rather than with the judge. We manually inspected a random subset of judge decisions to ensure label quality. We filtered out responses that exceeded the 2,048-token limit or were deemed unverifiable by the judge (e.g., missing an explicit answer). The remaining examples form the dataset used for training and evaluation. Table 4 summarizes the resulting sizes and label distributions across datasets and models. From a model-size perspective, invalid counts remain generally low but tend to be slightly higher for smaller models, which more often exceed length limits or omit explicit answers. Hallucination ratios also tend to decrease with scale: larger models are more consistently non-hallucinated across datasets, while smaller models show higher rates. This pattern aligns with improved instruction following and answer grounding as model capacity increases. 12 Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+Table 4. Statistics of the obtained hallucination datasets. #Valid - number of verifiable, valid answers, #Invalid - number of invalid answers (answers which exceeded allowed number of tokens or did not contain answer (judge model marked them unverifiable)), #Non-Hallucinated - number of answers among Valid which were not hallucinated, #Hallucinated - number of answers among Valid which were hallucinated, Hallucination Ratio - ratio of hallucinated answers to the total number of valid answers. Dataset LLM #Invalid #Valid Total Valid Ratio #Non-Hallucinated #Hallucinated Hallucination Ratio TriviaQA Llama3.1-8B 368 9,592 0.96 6,423 3,169 0.33 TriviaQA Llama3.2-3B 343 9,617 0.97 5,092 4,525 0.47 TriviaQA Mistral-Nemo 31 9,929 1.00 6,599 3,330 0.34 TriviaQA Phi3.5 56 9,904 0.99 5,294 4,610 0.47 NQ-Open Llama3.1-8B 731 2,879 0.80 1,056 1,823 0.63 NQ-Open Llama3.2-3B 888 2,722 0.75 1,173 1,549 0.57 NQ-Open Mistral-Nemo 7 3,603 1.00 1,103 2,500 0.69 NQ-Open Phi3.5 63 3,547 0.98 901 2,646 0.75 SQuADv2 Llama3.1-8B 1,374 4,554 0.77 1,081 3,473 0.76 SQuADv2 Llama3.2-3B 916 5,012 0.85 898 4,114 0.82 SQuADv2 Mistral-Nemo 20 5,908 1.00 1,327 4,581 0.78 SQuADv2 Phi3.5 173 5,755 0.97 1,388 4,367 0.76 TruthfulQA Llama3.1-8B 94 723 0.88 234 489 0.68 TruthfulQA Llama3.2-3B 54 763 0.93 200 563 0.74 TruthfulQA Mistral-Nemo 4 813 1.00 207 606 0.75 TruthfulQA Phi3.5 12 805 0.99 243 562 0.70 HaluEvalQA Llama3.1-8B 2,468 7,532 0.75 2,551 4,981 0.66 HaluEvalQA Llama3.2-3B 2,269 7,731 0.77 2,021 5,710 0.74 HaluEvalQA Mistral-Nemo 34 9,966 1.00 3,492 6,474 0.65 HaluEvalQA Phi3.5 209 9,791 0.98 2,788 7,003 0.72 UMWP Llama3.2-3B 5 5,195 1.00 4,021 1,174 0.23 UMWP Llama3.1-8B 55 5,145 0.99 4,348 797 0.15 UMWP Mistral-Nemo 6 5,194 1.00 4,399 795 0.15 UMWP Phi3.5 182 5,018 0.96 4,111 907 0.18 GSM8K Llama3.2-3B 17 1,302 0.99 973 329 0.25 GSM8K Llama3.1-8B 22 1,297 0.98 1,104 193 0.15 GSM8K Mistral-Nemo 108 1,211 0.92 1,058 153 0.13 GSM8K Phi3.5 162 1,157 0.88 1,019 138 0.12 
+
+## C. LLM inference details 
+
+In order to build our hallucination datasets, we leveraged 4 common LLMs from 3 different families, with sizes ranging from 3B up to 12B. We present specific versions of LLMs in Table 5. For QA datasets we adopted prompt from (Orgad et al., 2025), while for GSM8K we used prompt from lm-evaluation-harness (Gao et al., 2024), and for UMWP we used prompt from (Sun et al., 2024). During inference, we set temperature to 0.1 and run all examples with batch size equal to 1 for reproducibility (He & Lab, 2025). Further details can be found in the supplementary material. 
+
+Table 5. LLM details. 
+
+LLM HuggingFace Repository Llama3.2-3B (AI@Meta, 2024) meta-llama/Llama-3.2-3B-Instruct Llama3.1-8B (AI@Meta, 2024) meta-llama/Llama-3.1-8B-Instruct Mistral-Nemo (Mistral AI Team & NVIDIA, 2024) mistralai/Mistral-Nemo-Instruct-2407 Phi3.5 (Abdin et al., 2024) microsoft/Phi-3.5-mini-instruct 
+
+## D. Optimal k hyperparameter values 
+
+We run top-k selection among several candidate values j ∈ { 1, 2, 3, 4, 5, 10 , 25 , 50 , 100 }. In Table 6 we present which value of k led to the best results. While we can observe that the best mean scores are achieved for the highest value of k, we notice that similar efficacy is obtained for small values of k, which can be observed in Figure 6. 13 Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models                                                                                                   
+
+> Table 6. Values of top-kproviding best quality Dataset GSM8K HaluEvalQA NQ-Open SQuADv2 TriviaQA TruthfulQA UMWP LLM Feature Llama3.2-3B AttnEigval 100 100 100 100 100 50 100 LapEigval 100 100 100 100 100 100 50 SinkProbe 100 50 100 25 100 50 100 Phi3.5 AttnEigval 100 50 100 100 100 100 100 LapEigval 10 50 100 100 100 100 100 SinkProbe 50 50 50 100 50 250 Llama3.1-8B AttnEigval 100 100 100 100 100 100 100 LapEigval 100 100 100 100 100 10 100 SinkProbe 3100 100 25 100 100 100 Mistral-Nemo AttnEigval 100 100 100 100 50 100 100 LapEigval 100 25 50 100 25 100 100 SinkProbe 250 100 100 25 100 100
+
+## E. Important heads analysis 
+
+To identify which attention heads are most predictive of hallucination, we employ ℓ1-regularized logistic regression on our sink score features. We fit an ℓ1-regularized logistic regression model. The ℓ1 penalty induces sparsity, setting most coefficients βi to exactly zero, thereby performing implicit feature selection. We set C = 0 .75 based on 5-fold cross-validated ROC-AUC, balancing model sparsity with predictive performance. 
+
+Important Head Selection. We identify important heads by examining the non-zero coefficients after ℓ1 regularization. For coefficient βl,h,k corresponding to layer l, head h, and top-k position k, we compute the odds ratio exp( βl,h,k ). Features with | exp( βl,h,k ) − 1| > ϵ (where ϵ = 10 −6) are retained as important predictors: positive coefficients indicate that higher sink scores increase hallucination probability, while negative coefficients indicate the opposite. 
+
+Alternative: SHAP-based Selection. As an alternative to coefficient-based selection, we also considered SHAP val-ues (Lundberg & Lee, 2017) for quantifying feature importance. For each feature, we compute the mean absolute SHAP value across training samples and select features exceeding a specified quantile threshold. Although SHAP provides model-agnostic importance scores that account for feature interactions, we found that ℓ1-regularized coefficients yield sparser selections, and that the highest-ranked SHAP features overlap with those identified by the logistic regression model. 
+
+Layer-wise Importance Aggregation. To visualize importance distribution across model depth, we aggregate the absolute coefficient magnitudes by layer: 
+
+Il =
+
+> H
+
+X
+
+> h=1
+> K
+
+X
+
+> k=1
+
+|βl,h,k | (4) In our visualizations, we normalize layer indices to relative depth δl = l/L to enable comparison across models with different numbers of layers. The relative depths are discretized into bins of width 0.05 , and importance values are averaged within each bin to produce the heatmap visualization shown in Figure 4. 14 Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models 
+
+Llama3.2-3B Llama3.1-8B Mistral-Nemo Phi3.5 
+
+> GSM8K HaluEvalQA NQ-Open SQuADv2 TriviaQA TruthfulQA UMWP
+
+Figure 6. Hallucination detection performance (ROC-AUC) as a function of top-k across all models and datasets. Each subplot shows the ROC-AUC performance on 5-fold cross-validation for different values of k ∈ { 1, 2, 3, 4, 5, 10 , 25 , 50 , 100 } and models. Columns represent different LLMs, rows represent different datasets. 
+
+15

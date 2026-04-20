@@ -1,0 +1,94 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-001.webp",
+      "caption": "Figure 1: Visualization of the hidden states of questions that are known and unknown to the model. “Gray zone” refers to the overlapping area.",
+      "page": 1,
+      "index": 1,
+      "width": 420,
+      "height": 291
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-002.webp",
+      "caption": "Table 2: Performance on in-domain and out-of-domain question answering benchmarks. All results are multiplied by 100. The best result is bolded. The second best is underlined.",
+      "page": 6,
+      "index": 2,
+      "width": 900,
+      "height": 541
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-003.webp",
+      "caption": "Table 10: Hallucination cases in the Golden & RRN RAG setting. Confidence is the probe’s predicted probability that the model knows the answer (higher = more confident). The model hallucinates despite initially high confidence due to interference from retrieval noise.",
+      "page": 15,
+      "index": 3,
+      "width": 885,
+      "height": 802
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-004.webp",
+      "caption": "Table 3: RAG results. Acc. is accuracy. Hallu. is hallucination rate.",
+      "page": 7,
+      "index": 4,
+      "width": 917,
+      "height": 280
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-005.webp",
+      "caption": "Table 7: Performance of R-Tuning and GeoDe across different Qwen3 model sizes. All results are multiplied by 100. The best result per model size is bolded.",
+      "page": 13,
+      "index": 5,
+      "width": 798,
+      "height": 298
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-006.webp",
+      "caption": "Table 8: Dataset details. Llama (Llama3-8B-Instruct) and Qwen (Qwen3-8B) are the initial models used in experiments. Acc. (Accuracy) is for reference.",
+      "page": 13,
+      "index": 6,
+      "width": 461,
+      "height": 463
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-007.webp",
+      "caption": "Figure 4: Accuracy and hallucination rate according to different positive proportions in the training set.",
+      "page": 8,
+      "index": 7,
+      "width": 413,
+      "height": 305
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-008.webp",
+      "caption": "Table 4: Ablation study on the selection threshold X (percentage of samples retained by geometric distance) on Qwen3-8B. The optimal setting X=25% balances data quantity and label noise. Lower X causes underfitting due to insufficient data; higher X reintroduces boundary noise.",
+      "page": 8,
+      "index": 8,
+      "width": 787,
+      "height": 238
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-009.webp",
+      "caption": "Table 5: Ablation study on distance-based data partitioning for abstention fine-tuning. Samples are partitioned into three tiers based on their geometric distance |d(x)| to the probing hyperplane.",
+      "page": 8,
+      "index": 9,
+      "width": 431,
+      "height": 317
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-010.webp",
+      "caption": "Figure 2: Overview of our method. GeoDe contains three steps: (1) Identify the knowledge boundary by dividing the source data into two subsets (D0ik and D0idk), and train a probe using these two subsets. (2) Calculate the distance from test data D1 to the hyperplane learned by the probe, and select the subset of samples that are farthest from the hyperplane D1selected",
+      "page": 4,
+      "index": 10,
+      "width": 889,
+      "height": 502
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14324v1/fig-011.webp",
+      "caption": "Table 6: Abstention rates (%) across specialized benchmarks. High scores indicate effective identification of unanswerable or deceptive queries.",
+      "page": 9,
+      "index": 11,
+      "width": 457,
+      "height": 463
+    }
+  ]
+}

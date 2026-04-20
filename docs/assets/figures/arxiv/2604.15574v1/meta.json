@@ -1,0 +1,78 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-001.webp",
+      "caption": "Figure 3: Each panel shows factual correctness over training epochs for Known facts (blue), Unknown facts (orange), and Held-out facts (green). Middle (Self-Distillation): The model effectively acquires new facts while largely preserving performance on held-out facts, substantially reducing SFT-induced forgetting. Performance on DHeld closely matches the Only Known condition, while accuracy on DUnk reaches a level comparable to regular SFT.",
+      "page": 6,
+      "index": 1,
+      "width": 582,
+      "height": 221
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-002.webp",
+      "caption": "Figure 7: Training dynamics on Llama-3.1-8B (top) and Qwen2.5-7B (bottom). Each panel shows factual correctness over training epochs for Known facts (blue dash-dot), Unknown facts (orange dashed), and Held-out facts (green solid), across Regular SFT (left), SelfDistillation (middle), and Only Known (right).",
+      "page": 15,
+      "index": 2,
+      "width": 582,
+      "height": 396
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-003.webp",
+      "caption": "Figure 11: Extended drift metrics under standard SFT and self-distillation over 100 training epochs on the 10K semantic-overlap setting (§5.1). Top row, left to right: Hidden-state drift (RD), Jensen-Shannon divergence (JSD), mean targeted drift (MTD), and neighborhood structure (NS) — all at layer 14. Bottom row, left to right: Neighborhood token ratio (NTR), output-distribution drift (Rank-ρ), training accuracy on DUnk, and validation accuracy on DHeld. All metrics consistently show less drift under self-distillation than under standard SFT. Factual acquisition on DUnk proceeds at a comparable pace across conditions.",
+      "page": 22,
+      "index": 3,
+      "width": 829,
+      "height": 506
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-004.webp",
+      "caption": "Figure 6: Training dynamics across SLiCK knowledge groups. Factual correctness over training epochs on held-out HighlyKnown (left), MaybeKnown (middle), and WeaklyKnown (right) facts, for Regular SFT (blue), Self-Distillation (orange), and Only Known (green).",
+      "page": 14,
+      "index": 4,
+      "width": 826,
+      "height": 298
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-005.webp",
+      "caption": "Figure 2: Factual forgetting is caused by new fact acquisition, not fine-tuning itself. The model starts below ceiling as it has not yet adapted to the QA format, then rapidly learns it, achieving high accuracy on known facts. As training continues and unknown facts are acquired, accuracy on held-out facts declines, indicating that forgetting is driven by new factual knowledge, not fine-tuning per se. When unknown facts are excluded, held-out performance remains stable throughout training (Only Known Held-out curve), suggesting that new fact acquisition is a source of interference. Right: summary of data split roles.",
+      "page": 3,
+      "index": 5,
+      "width": 810,
+      "height": 236
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-006.webp",
+      "caption": "Figure 10: Synthetic entity construction. Semantic (token-mix) keys (left, steps 1–5): real P17 place names are tokenized, position-aware token pools are assembled, and novel names are formed by recombining tokens across names (e.g., Bergadena from Bergamo and Pasadena); candidates matching any existing place are discarded. UUID keys (right): random 8-character hex identifiers with no lexical overlap with real entities. Both conditions are paired with real country names under an identical question template, so the entity key is the sole variable. Candidate synthetic names that match any existing real place name are discarded.",
+      "page": 18,
+      "index": 6,
+      "width": 732,
+      "height": 527
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-007.webp",
+      "caption": "Table 3: Fine-grained freezing ablations. Each row corresponds to a different updated parameter subset θS, with all other parameters frozen. DHeld decreases monotonically with DUnk across all configurations, confirming that factual plasticity—not the specific parameter group—mediates forgetting. Attention projections and the full attention block suppress plasticity most effectively. Within the FFN, gate+up drives substantially more plasticity than down. Full FFN and full model (standard SFT) recover the baseline forgetting pattern. Only Known provides the stability upper bound.",
+      "page": 17,
+      "index": 7,
+      "width": 826,
+      "height": 371
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-008.webp",
+      "caption": "Figure 9: Hyperparameter ablations for selfdistillation. Each row ablates one hyperparameter while fixing the others (λ = 1, τ = 0.5). Left: DUnk accuracy (factual plasticity). Right: DHeld accuracy (factual stability).",
+      "page": 17,
+      "index": 8,
+      "width": 497,
+      "height": 539
+    },
+    {
+      "url": "assets/figures/arxiv/2604.15574v1/fig-009.webp",
+      "caption": "Figure 8: Accuracy on DHeld and MaybeKnown facts across training conditions. Top row: factual correctness on held-out HighlyKnown facts (DHeld). Bottom row: accuracy on out-of-training MaybeKnown facts. Results are shown for Llama-3.1-8B (left column) and Qwen2.5-7B (right column) under Regular SFT (solid pink), Self-Distillation (blue dash-dot), and Only Known (orange dashed).",
+      "page": 16,
+      "index": 9,
+      "width": 582,
+      "height": 490
+    }
+  ]
+}

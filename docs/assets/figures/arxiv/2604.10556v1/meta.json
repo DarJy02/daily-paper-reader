@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.10556v1/fig-001.webp",
+      "caption": "Table 5: Representative failure modes and response patterns of instruction-tuned dLLMs. Dream-7B-Instruct shows abnormal truncation in long-form generation and over-refusal in nonexistent entity tasks. Ling-mini-2.0 lacks of a unified refusal strategy, while LLaDA2.0-mini exhibits a consistent, rigid refusal template.",
+      "page": 11,
+      "index": 1,
+      "width": 939,
+      "height": 928
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10556v1/fig-002.webp",
+      "caption": "Table 4: Performance comparison across three extrinsic hallucination tasks. Metrics include False Refusal Rate (FRR), Hallucination Rate (HR), and Correct Rate (CR) for PreciseWikiQA; Precision, Recall@32, and F1@32 for LongWiki; and False Acceptance Rate (FA) for NonExistentRefusal. # Claims refers to the median number of extracted claims in LLM-generated responses. Bold indicates the best performance within each control group.",
+      "page": 10,
+      "index": 2,
+      "width": 939,
+      "height": 231
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10556v1/fig-003.webp",
+      "caption": "Table 7: Comparison of Intermediate Decoding Dynamics. We list the generation states of LLaDA and Dream at steps t = 16, 64, 256 (T = 1024). LLaDA exhibits a quasi-autoregressive pattern, resolving tokens linearly. Dream demonstrates stochastic flexibility, utilizing Minimum Entropy Decoding to resolve high-confidence tokens non-sequentially, leaving low-confidence regions as noise (represented by [MASK]).",
+      "page": 14,
+      "index": 3,
+      "width": 963,
+      "height": 697
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10556v1/fig-004.webp",
+      "caption": "Figure 1: F1@32 trends across exponentially increasing denoising steps. While LLaDA saturates early, Dream benefits from increased inference compute.",
+      "page": 4,
+      "index": 4,
+      "width": 461,
+      "height": 331
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10556v1/fig-005.webp",
+      "caption": "Table 1: Performance comparison across three extrinsic hallucination tasks. Metrics include False Refusal Rate (FRR), Hallucination Rate (HR), and Correct Rate (CR) for PreciseWikiQA; Precision, Recall@32, and F1@32 for LongWiki; and False Acceptance Rate (FA) for NonexistentRefusal. Bold indicates the better performance within each control group.",
+      "page": 4,
+      "index": 5,
+      "width": 937,
+      "height": 181
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10556v1/fig-006.webp",
+      "caption": "Table 6: Qualitative examples of the three distinct failure modes identified in dLLMs. Premature Termination shows abrupt endings with broken syntax; Incomplete Denoising exhibits repetitive or placeholder-like artifacts; Context Intrusion demonstrates hallucinated pivots to unrelated topics (e.g., coding or math).",
+      "page": 12,
+      "index": 6,
+      "width": 952,
+      "height": 639
+    }
+  ]
+}

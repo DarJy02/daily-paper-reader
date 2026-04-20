@@ -1,0 +1,86 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-001.webp",
+      "caption": "Table 1. Results of hallucination detection experiments, the values represent mean and standard deviation of ROC-AUC scores over 5-fold cross-validation, ∆ represents relative improvement of SinkProbe compared with second best or best performing method.",
+      "page": 6,
+      "index": 1,
+      "width": 1004,
+      "height": 638
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-002.webp",
+      "caption": "Figure 6. Hallucination detection performance (ROC-AUC) as a function of top-k across all models and datasets. Each subplot shows the ROC-AUC performance on 5-fold cross-validation for different values of k ∈ {1, 2, 3, 4, 5, 10, 25, 50, 100} and models. Columns represent different LLMs, rows represent different datasets.",
+      "page": 15,
+      "index": 2,
+      "width": 944,
+      "height": 1083
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-003.webp",
+      "caption": "Figure 1. Pipeline for hallucination detection based on attention sink scores. For each layer l and head h, we compute sink scores s(l,h), defined as the average of attention scores directed toward each token position. These scores are then sorted, and the top-k values are selected as features. The selected features from all layers and heads are concatenated to form the final feature vector z, which is passed to a hallucination probe – a binary classifier trained on labeled examples to distinguish hallucinated outputs from factually correct ones at inference time.",
+      "page": 2,
+      "index": 3,
+      "width": 906,
+      "height": 225
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-004.webp",
+      "caption": "Figure 4. Importance scores of attention sinks derived from an ℓ1-regularized probe, aggregated across heads and sink indices per layer: Il = ∑ h ∑ i |β (l,h)",
+      "page": 7,
+      "index": 4,
+      "width": 492,
+      "height": 289
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-005.webp",
+      "caption": "Table 6. Values of top-k providing best quality",
+      "page": 14,
+      "index": 5,
+      "width": 946,
+      "height": 347
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-006.webp",
+      "caption": "Figure 2. Relationship between attention output norm differences and layer importance scores for Llama3.2-3B-Instruct on GSM8K (a) and NQ-Open (b). The blue dashed line shows the average difference in attention output norms ∥O(l) u ∥2 between hallucinated and non-hallucinated examples (left axis), with error bars indicating standard error. The orange solid line shows layer importance scores from the hallucination probe (right axis). Both datasets exhibit alignment in middle layers, where norm differences and importance scores peak together.",
+      "page": 3,
+      "index": 6,
+      "width": 1017,
+      "height": 352
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-007.webp",
+      "caption": "Table 4. Statistics of the obtained hallucination datasets. #Valid - number of verifiable, valid answers, #Invalid - number of invalid answers (answers which exceeded allowed number of tokens or did not contain answer (judge model marked them unverifiable)), #Non-Hallucinated - number of answers among Valid which were not hallucinated, #Hallucinated - number of answers among Valid which were hallucinated, Hallucination Ratio - ratio of hallucinated answers to the total number of valid answers.",
+      "page": 13,
+      "index": 7,
+      "width": 1004,
+      "height": 667
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-008.webp",
+      "caption": "Figure 5. Influence of k. Varying the number of retained sink scores per head, we find that SinkProbe attains best or near-best performance even for small values of k. This suggests that hallucination-related signals are concentrated in a few dominant sinks and that sink-score features capture this signal more directly and robustly than existing attention- or spectral-based representations. The presented results are for Llama3.2-3B, for other models and datasets see Section D.",
+      "page": 8,
+      "index": 8,
+      "width": 1017,
+      "height": 188
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-009.webp",
+      "caption": "Figure 3. Distribution of the mean frequency with which the token with sink score at rank k lies in the prompt (averaged over heads), for Llama3.2-3B.",
+      "page": 4,
+      "index": 9,
+      "width": 492,
+      "height": 369
+    },
+    {
+      "url": "assets/figures/arxiv/2604.10697v1/fig-010.webp",
+      "caption": "Table 3. Detailed references for the datasets used in the experiments. (†Preprocessed following Chen et al. (2024)).",
+      "page": 12,
+      "index": 10,
+      "width": 863,
+      "height": 225
+    }
+  ]
+}

@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.11087v1/fig-001.webp",
+      "caption": "Table 1: Main results of AUROC and F1-Score compared with different competitive baselines over diverse LLMs on TruthfulQA, TriviaQA, SciQ and HaluEval datasets. The best results are highlighted in bold.",
+      "page": 6,
+      "index": 1,
+      "width": 945,
+      "height": 597
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11087v1/fig-002.webp",
+      "caption": "Figure 5: Cross-dataset generalization analysis for CausalGaze and HaluGNN. Each subplot displays the F1-Score when the model is trained on the row dataset and tested on the column dataset, with values annotated in each cell.",
+      "page": 7,
+      "index": 2,
+      "width": 455,
+      "height": 305
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11087v1/fig-003.webp",
+      "caption": "Figure 2: Overall framework of the proposed CausalGaze. We first employ the gradient-guided counterfactual intervention to obtain the refined edges, then the hidden states and the refined edges are together passed to the GNN-based detection module for the final hallucination detection result.",
+      "page": 3,
+      "index": 3,
+      "width": 900,
+      "height": 279
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11087v1/fig-004.webp",
+      "caption": "Table 4: The contribution of the Projection Layer and its dimentions on Qwen2-7B and Mistral-7B across different datasets. The best results are highlighted in bold.",
+      "page": 13,
+      "index": 4,
+      "width": 945,
+      "height": 268
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11087v1/fig-005.webp",
+      "caption": "Table 5: The impact of causal graphs from different layers of Qwen2-7B and Mistral-7B on the detection performance.",
+      "page": 13,
+      "index": 5,
+      "width": 943,
+      "height": 285
+    },
+    {
+      "url": "assets/figures/arxiv/2604.11087v1/fig-006.webp",
+      "caption": "Table 2: The contribution of the Projection Layer and its dimentions on Llama2-7B across different datasets. The best results are highlighted in bold.",
+      "page": 8,
+      "index": 6,
+      "width": 943,
+      "height": 182
+    }
+  ]
+}

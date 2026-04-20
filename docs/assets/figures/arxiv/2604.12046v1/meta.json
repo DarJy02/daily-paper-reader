@@ -1,0 +1,54 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.12046v1/fig-001.webp",
+      "caption": "Figure 3: Selective prediction via confidence thresholding. Low-confidence claims are filtered, while retained confidence scores provide explicit transparency into the final output.",
+      "page": 6,
+      "index": 1,
+      "width": 822,
+      "height": 216
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12046v1/fig-002.webp",
+      "caption": "Figure 6: Training reward dynamics under GRPO. Left: factuality reward. Right: calibration reward. Solid lines denote per-step rewards, and dashed lines denote moving averages (window size 10). The calibration reward closely follows the factuality reward across training, indicating that it is largely driven by claim correctness rather than confidence– correctness alignment. This entanglement leads to weak and noisy learning signals for calibration.",
+      "page": 15,
+      "index": 2,
+      "width": 829,
+      "height": 288
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12046v1/fig-003.webp",
+      "caption": "Figure 7: Pareto frontier of factual accuracy versus recall across extended configurations. Curves represent the trade-off shaped by different training-time penalties ϵ ∈ {0.0, 0.2, 0.4, 0.6, 0.8, 1.0}, while markers indicate the navigation along each frontier via the inference-time confidence threshold τ ∈ {0.0, 0.2, 0.4, 0.6, 0.8}. Our framework consistently dominates the Base LLM and the accuracy-only baseline across all viable settings.",
+      "page": 15,
+      "index": 3,
+      "width": 807,
+      "height": 551
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12046v1/fig-004.webp",
+      "caption": "Table 1: Main results on three long-form factuality benchmarks. Stages in our training pipeline are cumulative: starting from SFT, we sequentially apply Feasibility RL (F-RL), Calibration Optimization (CO), and finally Factuality Optimization (FO). For L2RF, we report only accuracy following the results reported in their paper, since their outputs are not available for computing calibration metrics. CURE achieves the highest accuracy across all datasets and the best AUROC on FactBench and LongFact. AUROC measures the ability to distinguish correct from incorrect claims and is more informative and pratical than ECE and Brier.",
+      "page": 7,
+      "index": 4,
+      "width": 825,
+      "height": 188
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12046v1/fig-005.webp",
+      "caption": "Table 2: Comparison of joint optimization and decoupled training on FactBench using Llama3.1-8B-Instruct. Joint GRPO augments the reward with the Brier score and is evaluated with varying group sizes n (Rows 2-4), with weighted Brier in Row 5. Row 6 applies GRPO for calibration only, while Rows 7-8 use DPO-based calibration followed by factuality optimization. Joint GRPO (Rows 2-5) fails to achieve strong calibration despite larger n and reweighting. GRPO-based calibration alone (Row 6) remains insufficient, whereas DPO-based calibration (Row 7) substantially improves performance, with further gains in both factual accuracy and discriminative calibration (AUROC) after factuality optimization (Row 8).",
+      "page": 9,
+      "index": 5,
+      "width": 764,
+      "height": 196
+    },
+    {
+      "url": "assets/figures/arxiv/2604.12046v1/fig-006.webp",
+      "caption": "Figure 2: Stages 2 and 3 of the multi-stage training pipeline. In Stage 2 (left), confidence correction constructs preference pairs for DPO-based calibration, aligning confidence estimates with empirical correctness. In Stage 3 (right), GRPO optimizes claim-level factuality under feasibility constraints, with rewards explicitly restricted to claim tokens. This design decouples calibration from factual optimization.",
+      "page": 5,
+      "index": 6,
+      "width": 823,
+      "height": 246
+    }
+  ]
+}

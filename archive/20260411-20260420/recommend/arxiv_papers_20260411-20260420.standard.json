@@ -1,0 +1,822 @@
+{
+  "mode": "standard",
+  "generated_at": "2026-04-20T10:16:43.306045+00:00",
+  "stats": {
+    "mode": "standard",
+    "tag_count": 1,
+    "deep_divecandidates": 21,
+    "deep_cap": 6,
+    "deep_selected": 19,
+    "quick_candidates": 2,
+    "quick_skim_target": 11,
+    "quick_selected": 2
+  },
+  "deep_dive": [
+    {
+      "id": "2604.12944v1",
+      "source": "arxiv",
+      "title": "Distorted or Fabricated? A Survey on Hallucination in Video LLMs",
+      "abstract": "Despite significant progress in video-language modeling, hallucinations remain a persistent challenge in Video Large Language Models (Vid-LLMs), referring to outputs that appear plausible yet contradict the content of the input video. This survey presents a comprehensive analysis of hallucinations in Vid-LLMs and introduces a systematic taxonomy that categorizes them into two core types: dynamic distortion and content fabrication, each comprising two subtypes with representative cases. Building on this taxonomy, we review recent advances in the evaluation and mitigation of hallucinations, covering key benchmarks, metrics, and intervention strategies. We further analyze the root causes of dynamic distortion and content fabrication, which often result from limited capacity for temporal representation and insufficient visual grounding. These insights inform several promising directions for future work, including the development of motion-aware visual encoders and the integration of counterfactual learning techniques. This survey consolidates scattered progress to foster a systematic understanding of hallucinations in Vid-LLMs, laying the groundwork for building robust and reliable video-language systems. An up-to-date curated list of related works is maintained at https://github.com/hukcc/Awesome-Video-Hallucination .",
+      "authors": [
+        "Yiyang Huang",
+        "Yitian Zhang",
+        "Yizhou Wang",
+        "Mingyuan Zhang",
+        "Liang Shi",
+        "Huimin Zeng",
+        "Yun Fu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV",
+        "cs.AI"
+      ],
+      "published": "2026-04-14T16:37:57+00:00",
+      "link": "https://arxiv.org/pdf/2604.12944v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 10.0,
+      "llm_evidence_en": "comprehensive survey on hallucination taxonomy, evaluation, and mitigation in Video LLMs",
+      "llm_evidence_cn": "关于视频大模型幻觉分类、评估和缓解的全面综述",
+      "llm_evidence": "关于视频大模型幻觉分类、评估和缓解的全面综述",
+      "canonical_evidence": "关于视频大模型幻觉分类、评估和缓解的全面综述",
+      "llm_tldr_en": "Provides a systematic taxonomy and review of hallucination causes and mitigation strategies in Video LLMs.",
+      "llm_tldr_cn": "系统性地综述了视频大模型的幻觉分类、产生原因及现有的评估与缓解策略。",
+      "llm_tldr": "系统性地综述了视频大模型的幻觉分类、产生原因及现有的评估与缓解策略。",
+      "llm_tags": [
+        "query:llmh:composite"
+      ],
+      "matched_query_tag": "query:llmh:composite",
+      "matched_query_text": "Papers central to 关于大型语言模型幻觉问题的学术论文检索, especially work that connects or combines: research papers discussing hallucinations in large language models; studies on model hallucination and false generation in AI systems; methods and frameworks for detecting and mitigating hallucinations in LLMs.",
+      "matched_requirement_id": "req-composite-llmh",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10027v1",
+      "source": "arxiv",
+      "title": "SinkTrack: Attention Sink based Context Anchoring for Large Language Models",
+      "abstract": "Large language models (LLMs) suffer from hallucination and context forgetting. Prior studies suggest that attention drift is a primary cause of these problems, where LLMs' focus shifts towards newly generated tokens and away from the initial input context. To counteract this, we make use of a related, intrinsic characteristic of LLMs: attention sink -- the tendency to consistently allocate high attention to the very first token (i.e., <BOS>) of a sequence. Concretely, we propose an advanced context anchoring method, SinkTrack, which treats <BOS> as an information anchor and injects key contextual features (such as those derived from the input image or instruction) into its representation. As such, LLM remains anchored to the initial input context throughout the entire generation process. SinkTrack is training-free, plug-and-play, and introduces negligible inference overhead. Experiments demonstrate that SinkTrack mitigates hallucination and context forgetting across both textual (e.g., +21.6% on SQuAD2.0 with Llama3.1-8B-Instruct) and multi-modal (e.g., +22.8% on M3CoT with Qwen2.5-VL-7B-Instruct) tasks. Its consistent gains across different architectures and scales underscore the robustness and generalizability. We also analyze its underlying working mechanism from the perspective of information delivery. Our source code is available at https://github.com/67L1/SinkTrack.",
+      "authors": [
+        "Xu Liu",
+        "Guikun Chen",
+        "Wenguan Wang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-11T04:49:11+00:00",
+      "link": "https://arxiv.org/pdf/2604.10027v1",
+      "tags": [
+        "keyword:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "proposes SinkTrack context anchoring to counteract hallucination caused by attention drift",
+      "llm_evidence_cn": "提出SinkTrack上下文锚定方法，以对抗由注意力漂移引起的幻觉",
+      "llm_evidence": "提出SinkTrack上下文锚定方法，以对抗由注意力漂移引起的幻觉",
+      "canonical_evidence": "提出SinkTrack上下文锚定方法，以对抗由注意力漂移引起的幻觉",
+      "llm_tldr_en": "Introduces SinkTrack to anchor LLMs to initial context using attention sinks, reducing hallucinations.",
+      "llm_tldr_cn": "引入SinkTrack利用注意力汇聚将模型锚定在初始上下文，从而减少幻觉。",
+      "llm_tldr": "引入SinkTrack利用注意力汇聚将模型锚定在初始上下文，从而减少幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10071v1",
+      "source": "arxiv",
+      "title": "Spotlight and Shadow: Attention-Guided Dual-Anchor Introspective Decoding for MLLM Hallucination Mitigation",
+      "abstract": "Multimodal Large Language Models (MLLMs) have demonstrated remarkable reasoning capabilities yet continue to suffer from hallucination, where generated text contradicts visual content. In this paper, we introduce Dual-Anchor Introspective Decoding (DaID), a novel contrastive decoding framework that dynamically calibrates each token generation by mining the model's internal perceptual discrepancies. Specifically, DaID identifies a Spotlight layer to amplify visual factual signals and a Shadow layer to suppress textual inertia. By leveraging visual attention distributions to guide this dual-anchor selection process, our method ensures precise, token-specific adaptation. Experimental results across multiple benchmarks and MLLMs demonstrate that DaID significantly mitigates hallucination while enhancing general reasoning capabilities.",
+      "authors": [
+        "Yebo Wu",
+        "Han Jin",
+        "Zhijiang Guo",
+        "Li Li"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-11T07:19:17+00:00",
+      "link": "https://arxiv.org/pdf/2604.10071v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Dual-Anchor Introspective Decoding framework for MLLM hallucination mitigation",
+      "llm_evidence_cn": "用于缓解多模态大模型幻觉的双锚内省解码框架",
+      "llm_evidence": "用于缓解多模态大模型幻觉的双锚内省解码框架",
+      "canonical_evidence": "用于缓解多模态大模型幻觉的双锚内省解码框架",
+      "llm_tldr_en": "Introduces a contrastive decoding framework that calibrates tokens to reduce multimodal hallucinations.",
+      "llm_tldr_cn": "引入一种对比解码框架，通过校准标记来减少多模态幻觉。",
+      "llm_tldr": "引入一种对比解码框架，通过校准标记来减少多模态幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10506v1",
+      "source": "arxiv",
+      "title": "A Progressive Training Strategy for Vision-Language Models to Counteract Spatio-Temporal Hallucinations in Embodied Reasoning",
+      "abstract": "Vision-Language Models (VLMs) have made significant strides in static image understanding but continue to face critical hurdles in spatiotemporal reasoning. A major bottleneck is \"multi-image reasoning hallucination\", where a massive performance drop between forward and reverse temporal queries reveals a dependence on superficial shortcuts instead of genuine causal understanding. To mitigate this, we first develop a new Chain-of-Thought (CoT) dataset that decomposes intricate reasoning into detailed spatiotemporal steps and definitive judgments. Building on this, we present a progressive training framework: it initiates with supervised pre-training on our CoT dataset to instill logical structures, followed by fine-tuning with scalable weakly-labeled data for broader generalization. Our experiments demonstrate that this approach not only improves backbone accuracy but also slashes the forward-backward performance gap from over 70\\% to only 6.53\\%. This confirms the method's ability to develop authentic dynamic reasoning and reduce the inherent temporal biases of current VLMs.",
+      "authors": [
+        "Xiaoda Yang",
+        "Shuai Yang",
+        "Can Wang",
+        "Jingyang Xue",
+        "Menglan Tang",
+        "Checheng Yu",
+        "Xunzhe Zhou",
+        "Sashuai Zhou",
+        "Tao Jin",
+        "Lixin Yang",
+        "Xiangyu Yue",
+        "Zhou Zhao"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-12T07:48:44+00:00",
+      "link": "https://arxiv.org/pdf/2604.10506v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "progressive training strategy and CoT dataset to counteract spatio-temporal hallucinations",
+      "llm_evidence_cn": "通过渐进式训练策略和思维链数据集对抗时空幻觉",
+      "llm_evidence": "通过渐进式训练策略和思维链数据集对抗时空幻觉",
+      "canonical_evidence": "通过渐进式训练策略和思维链数据集对抗时空幻觉",
+      "llm_tldr_en": "Proposes a progressive training framework and CoT dataset to mitigate spatiotemporal hallucinations in VLMs.",
+      "llm_tldr_cn": "提出渐进式训练框架和CoT数据集，以缓解视觉语言模型中的时空幻觉。",
+      "llm_tldr": "提出渐进式训练框架和CoT数据集，以缓解视觉语言模型中的时空幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10556v1",
+      "source": "arxiv",
+      "title": "Lost in Diffusion: Uncovering Hallucination Patterns and Failure Modes in Diffusion Large Language Models",
+      "abstract": "While Diffusion Large Language Models (dLLMs) have emerged as a promising non-autoregressive paradigm comparable to autoregressive (AR) models, their faithfulness, specifically regarding hallucination, remains largely underexplored. To bridge this gap, we present the first controlled comparative study to evaluate hallucination patterns in dLLMs. Our results demonstrate that current dLLMs exhibit a higher propensity for hallucination than AR counterparts controlled for architecture, scale, and pre-training weights. Furthermore, an analysis of inference-time compute reveals divergent dynamics: while quasi-autoregressive generation suffers from early saturation, non-sequential decoding unlocks potential for continuous refinement. Finally, we identify distinct failure modes unique to the diffusion process, including premature termination, incomplete denoising, and context intrusion. Our findings underscore that although dLLMs have narrowed the performance gap on general tasks, their distinct hallucination mechanisms pose a critical challenge to model reliability. Our code is available at https://github.com/ZeroLoss-Lab/Lost-in-Diffusion",
+      "authors": [
+        "Zhengnan Guo",
+        "Fei Tan"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-12T09:59:41+00:00",
+      "link": "https://arxiv.org/pdf/2604.10556v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "study evaluating hallucination patterns and failure modes in Diffusion LLMs",
+      "llm_evidence_cn": "评估扩散大模型幻觉模式与失效模式的研究",
+      "llm_evidence": "评估扩散大模型幻觉模式与失效模式的研究",
+      "canonical_evidence": "评估扩散大模型幻觉模式与失效模式的研究",
+      "llm_tldr_en": "Conducts a comparative study on hallucination patterns in diffusion-based LLMs versus autoregressive models.",
+      "llm_tldr_cn": "首次对扩散大模型的幻觉模式进行了对比研究，揭示了其与传统自回归模型的差异。",
+      "llm_tldr": "首次对扩散大模型的幻觉模式进行了对比研究，揭示了其与传统自回归模型的差异。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "research papers discussing hallucinations in large language models",
+      "matched_requirement_id": "req-1",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.10697v1",
+      "source": "arxiv",
+      "title": "Attention Sinks as Internal Signals for Hallucination Detection in Large Language Models",
+      "abstract": "Large language models frequently exhibit hallucinations: fluent and confident outputs that are factually incorrect or unsupported by the input context. While recent hallucination detection methods have explored various features derived from attention maps, the underlying mechanisms they exploit remain poorly understood. In this work, we propose SinkProbe, a hallucination detection method grounded in the observation that hallucinations are deeply entangled with attention sinks - tokens that accumulate disproportionate attention mass during generation - indicating a transition from distributed, input-grounded attention to compressed, prior-dominated computation. Importantly, although sink scores are computed solely from attention maps, we find that the classifier preferentially relies on sinks whose associated value vectors have large norms. Moreover, we show that previous methods implicitly depend on attention sinks by establishing their mathematical relationship to sink scores. Our findings yield a novel hallucination detection method grounded in theory that produces state-of-the-art results across popular datasets and LLMs.",
+      "authors": [
+        "Jakub Binkowski",
+        "Kamil Adamczewski",
+        "Tomasz Kajdanowicz"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-04-12T15:46:22+00:00",
+      "link": "https://arxiv.org/pdf/2604.10697v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "hallucination detection method using attention sinks as internal signals",
+      "llm_evidence_cn": "利用注意力汇聚作为内部信号的幻觉检测方法",
+      "llm_evidence": "利用注意力汇聚作为内部信号的幻觉检测方法",
+      "canonical_evidence": "利用注意力汇聚作为内部信号的幻觉检测方法",
+      "llm_tldr_en": "Introduces SinkProbe, a method that uses attention sink scores to detect hallucinations in LLM generations.",
+      "llm_tldr_cn": "提出SinkProbe方法，通过分析注意力机制中的“汇聚”现象来有效检测大模型的幻觉。",
+      "llm_tldr": "提出SinkProbe方法，通过分析注意力机制中的“汇聚”现象来有效检测大模型的幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11087v1",
+      "source": "arxiv",
+      "title": "CausalGaze: Unveiling Hallucinations via Counterfactual Graph Intervention in Large Language Models",
+      "abstract": "Despite the groundbreaking advancements made by large language models (LLMs), hallucination remains a critical bottleneck for their deployment in high-stakes domains. Existing classification-based methods mainly rely on static and passive signals from internal states, which often captures the noise and spurious correlations, while overlooking the underlying causal mechanisms. To address this limitation, we shift the paradigm from passive observation to active intervention by introducing CausalGaze, a novel hallucination detection framework based on structural causal models (SCMs). CausalGaze models LLMs' internal states as dynamic causal graphs and employs counterfactual interventions to disentangle causal reasoning paths from incidental noise, thereby enhancing model interpretability. Extensive experiments across four datasets and three widely used LLMs demonstrate the effectiveness of CausalGaze, especially achieving over 5.2\\% improvement in AUROC on the TruthfulQA dataset compared to state-of-the-art baselines.",
+      "authors": [
+        "Linggang Kong",
+        "Lei Wu",
+        "Yunlong Zhang",
+        "Xiaofeng Zhong",
+        "Zhen Wang",
+        "Yongjie Wang",
+        "Yao Pan"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG"
+      ],
+      "published": "2026-04-13T07:09:33+00:00",
+      "link": "https://arxiv.org/pdf/2604.11087v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "CausalGaze framework for hallucination detection using counterfactual graph intervention",
+      "llm_evidence_cn": "使用反事实图干预进行幻觉检测的CausalGaze框架",
+      "llm_evidence": "使用反事实图干预进行幻觉检测的CausalGaze框架",
+      "canonical_evidence": "使用反事实图干预进行幻觉检测的CausalGaze框架",
+      "llm_tldr_en": "Develops a causal framework to detect hallucinations by intervening on the LLM's internal causal graphs.",
+      "llm_tldr_cn": "开发了一个因果框架，通过干预大模型的内部因果图来检测幻觉。",
+      "llm_tldr": "开发了一个因果框架，通过干预大模型的内部因果图来检测幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11141v1",
+      "source": "arxiv",
+      "title": "Reducing Hallucination in Enterprise AI Workflows via Hybrid Utility Minimum Bayes Risk (HUMBR)",
+      "abstract": "Although LLMs drive automation, it is critical to ensure immense consideration for high-stakes enterprise workflows such as those involving legal matters, risk management, and privacy compliance. For Meta, and other organizations like ours, a single hallucinated clause in such high stakes workflows risks material consequences. We show that by framing hallucination mitigation as a Minimum Bayes Risk (MBR) problem, we can dramatically reduce this risk. Specifically, we introduce a Hybrid Utility MBR (HUMBR) framework that synthesizes semantic embedding similarity with lexical precision to identify consensus without ground-truth references, for which we derive rigorous error bounds. We complement this theoretical analysis with a comprehensive empirical evaluation on widely-used public benchmark suites (TruthfulQA and LegalBench) and also real world data from Meta production deployment. The results from our empirical study show that MBR significantly outperforms standard Universal Self-Consistency. Notably, 81% of the pipeline's suggestions were preferred over human-crafted ground truth, and critical recall failures were virtually eliminated.",
+      "authors": [
+        "Chenhao Fang",
+        "Jordi Mola",
+        "Mark Harman",
+        "Jason Nawrocki",
+        "Vaibhav Shrivastava",
+        "Yue Cheng",
+        "Jay Minesh Shah",
+        "Katayoun Zand",
+        "Mansi Tripathi",
+        "Arya Pudota",
+        "Matthew Becker",
+        "Hervé Robert",
+        "Abhishek Gulati"
+      ],
+      "primary_category": "cs.LG",
+      "categories": [
+        "cs.LG",
+        "cs.CR"
+      ],
+      "published": "2026-04-13T07:57:48+00:00",
+      "link": "https://arxiv.org/pdf/2604.11141v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Hybrid Utility Minimum Bayes Risk framework for hallucination mitigation in enterprise workflows",
+      "llm_evidence_cn": "用于企业工作流中幻觉缓解的混合效用最小贝叶斯风险框架",
+      "llm_evidence": "用于企业工作流中幻觉缓解的混合效用最小贝叶斯风险框架",
+      "canonical_evidence": "用于企业工作流中幻觉缓解的混合效用最小贝叶斯风险框架",
+      "llm_tldr_en": "Introduces the HUMBR framework to reduce hallucination risks in high-stakes enterprise AI workflows.",
+      "llm_tldr_cn": "引入HUMBR框架，以降低高风险企业AI工作流中的幻觉风险。",
+      "llm_tldr": "引入HUMBR框架，以降低高风险企业AI工作流中的幻觉风险。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.11258v1",
+      "source": "arxiv",
+      "title": "Dialectic-Med: Mitigating Diagnostic Hallucinations via Counterfactual Adversarial Multi-Agent Debate",
+      "abstract": "Multimodal Large Language Models (MLLMs) in healthcare suffer from severe confirmation bias, often hallucinating visual details to support initial, potentially erroneous diagnostic hypotheses. Existing Chain-of-Thought (CoT) approaches lack intrinsic correction mechanisms, rendering them vulnerable to error propagation. To bridge this gap, we propose Dialectic-Med, a multi-agent framework that enforces diagnostic rigor through adversarial dialectics. Unlike static consensus models, Dialectic-Med orchestrates a dynamic interplay between three role-specialized agents: a proponent that formulates diagnostic hypotheses; an opponent equipped with a novel visual falsification module that actively retrieves contradictory visual evidence to challenge the Proponent; and a mediator that resolves conflicts via a weighted consensus graph. By explicitly modeling the cognitive process of falsification, our framework guarantees that diagnostic reasoning is tightly grounded in verified visual regions. Empirical evaluations on MIMIC-CXR-VQA, VQA-RAD, and PathVQA demonstrate that Dialectic-Med not only achieves state-of-the-art performance but also fundamentally enhances the trustworthiness of the reasoning process. Beyond accuracy, our approach significantly enhances explanation faithfulness and decisively mitigates hallucinations, establishing a new standard over single-agent baselines.",
+      "authors": [
+        "Zhixiang Lu",
+        "Jionglong Su"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-13T10:09:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.11258v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "multi-agent framework mitigating diagnostic hallucinations via adversarial multi-agent debate",
+      "llm_evidence_cn": "通过对抗性多智能体辩论缓解诊断幻觉的多智能体框架",
+      "llm_evidence": "通过对抗性多智能体辩论缓解诊断幻觉的多智能体框架",
+      "canonical_evidence": "通过对抗性多智能体辩论缓解诊断幻觉的多智能体框架",
+      "llm_tldr_en": "Uses adversarial multi-agent debate to correct confirmation bias and diagnostic hallucinations in MLLMs.",
+      "llm_tldr_cn": "利用对抗性多智能体辩论来纠正多模态大模型中的确认偏差和诊断幻觉。",
+      "llm_tldr": "利用对抗性多智能体辩论来纠正多模态大模型中的确认偏差和诊断幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12046v1",
+      "source": "arxiv",
+      "title": "Think Through Uncertainty: Improving Long-Form Generation Factuality via Reasoning Calibration",
+      "abstract": "Large language models (LLMs) often hallucinate in long-form generation. Existing approaches mainly improve factuality through post-hoc revision or reinforcement learning (RL) with correctness-based rewards, but they do not teach the model to estimate which parts of its generation are reliable. As a result, models may still state incorrect claims confidently in their responses. Recent advances in reasoning have significantly improved LLM performance, and have been leveraged to estimate confidence by incorporating calibration into RL objectives. However, existing approaches remain limited to a single scalar confidence for the entire response, which is insufficient for long-form generation where uncertainty varies across individual claims. To mitigate this problem, we propose CURE, a framework that improves long-form factuality by teaching LLMs to reason about uncertainty at the claim level. We first introduce a Claim-Aware Reasoning Protocol, which structures outputs into atomic claims paired with explicit confidence estimates. We then develop a multi-stage training pipeline that aligns model confidence with claims' correctness and then optimizes on factuality. The resulting calibrated confidence further enables selective prediction, allowing the model to abstain from uncertain claims at inference time. Experiments on four long-form factuality benchmarks show that CURE consistently improves factual accuracy over competitive supervised and RL baselines, while maintaining factual recall. In particular, it improves claim-level accuracy by up to 39.9% on Biography generation. These gains are accompanied by improved calibration, as reflected by a 16.0% increase in AUROC on FactBench.",
+      "authors": [
+        "Xin Liu",
+        "Lu Wang"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-13T20:38:36+00:00",
+      "link": "https://arxiv.org/pdf/2604.12046v1",
+      "tags": [
+        "keyword:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "improving long-form generation factuality via reasoning calibration to reduce hallucinations",
+      "llm_evidence_cn": "通过推理校准提高长文本生成的真实性，减少幻觉",
+      "llm_evidence": "通过推理校准提高长文本生成的真实性，减少幻觉",
+      "canonical_evidence": "通过推理校准提高长文本生成的真实性，减少幻觉",
+      "llm_tldr_en": "Improves long-form factuality by teaching LLMs to estimate reliability through reasoning calibration.",
+      "llm_tldr_cn": "通过推理校准教模型评估可靠性，从而提高长文本生成的真实性。",
+      "llm_tldr": "通过推理校准教模型评估可靠性，从而提高长文本生成的真实性。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12115v1",
+      "source": "arxiv",
+      "title": "HTDC: Hesitation-Triggered Differential Calibration for Mitigating Hallucination in Large Vision-Language Models",
+      "abstract": "Large vision-language models (LVLMs) achieve strong multimodal performance, but still suffer from hallucinations caused by unstable visual grounding and over-reliance on language priors. Existing training-free decoding methods typically apply calibration at every decoding step, introducing unnecessary computation and potentially disrupting stable predictions. We address this problem by identifying layer-wise hesitation, a simple signal of grounding instability reflected by fluctuations in token preference across intermediate layers. Based on this observation, we propose Hesitation-Triggered Differential Calibration (HTDC), a training-free decoding framework that preserves standard full-branch inference and activates calibration only at hesitation-prone steps. When triggered, HTDC contrasts the full branch with two lightweight probes, a visual-nullification probe and a semantic-nullification probe, to suppress hallucination-prone candidates while avoiding unnecessary intervention on stable steps. Experiments on representative hallucination benchmarks show that HTDC consistently reduces hallucinations while maintaining strong task accuracy, achieving a favorable trade-off between effectiveness and computational overhead.",
+      "authors": [
+        "Xinyun Liu"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-13T22:47:27+00:00",
+      "link": "https://arxiv.org/pdf/2604.12115v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "training-free decoding framework for mitigating hallucination in vision-language models",
+      "llm_evidence_cn": "用于缓解视觉语言模型幻觉的免训练解码框架",
+      "llm_evidence": "用于缓解视觉语言模型幻觉的免训练解码框架",
+      "canonical_evidence": "用于缓解视觉语言模型幻觉的免训练解码框架",
+      "llm_tldr_en": "Proposes HTDC, a training-free decoding method to mitigate hallucinations in LVLMs using hesitation signals.",
+      "llm_tldr_cn": "提出HTDC框架，利用犹豫信号作为解码校准依据，有效缓解多模态大模型的幻觉问题。",
+      "llm_tldr": "提出HTDC框架，利用犹豫信号作为解码校准依据，有效缓解多模态大模型的幻觉问题。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12424v1",
+      "source": "arxiv",
+      "title": "Decoding by Perturbation: Mitigating MLLM Hallucinations via Dynamic Textual Perturbation",
+      "abstract": "Multimodal Large Language Models frequently suffer from inference hallucinations, partially stemming from language priors dominating visual evidence. Existing training-free mitigation methods either perturb the visual representation and deviate from the natural image distribution, or enforce intrusive manipulations that compromise the model's inherent generative fluency. We introduce a novel perspective that multimodal hallucination manifests as the hypersensitivity of visual grounding to textual phrasing during the decoding phase. Building on this insight, we propose Decoding by Perturbation (DeP), a training-free framework mitigating prior-induced hallucinations via controlled textual interventions. DeP employs a dynamic probe applying multi-level textual perturbations to elicit latent language priors. Leveraging attention variance, it enhances stable evidence regions while suppressing suspicious noise in the feature space. Furthermore, it constructs an interpretable prior drift direction using logits statistics to counteract probability biases from textual co-occurrences. Extensive experiments confirm DeP effectively reduces hallucinations and achieves superior performance across multiple benchmarks.",
+      "authors": [
+        "Sihang Jia",
+        "Shuliang Liu",
+        "Songbo Yang",
+        "Yibo Yan",
+        "Xin Zou",
+        "Xuming Hu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.CV"
+      ],
+      "published": "2026-04-14T08:15:44+00:00",
+      "link": "https://arxiv.org/pdf/2604.12424v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "Decoding by Perturbation framework mitigating MLLM hallucinations via textual interventions",
+      "llm_evidence_cn": "通过文本干预缓解多模态大模型幻觉的扰动解码框架",
+      "llm_evidence": "通过文本干预缓解多模态大模型幻觉的扰动解码框架",
+      "canonical_evidence": "通过文本干预缓解多模态大模型幻觉的扰动解码框架",
+      "llm_tldr_en": "Proposes a training-free decoding framework that uses textual perturbations to mitigate MLLM hallucinations.",
+      "llm_tldr_cn": "提出一种无需训练的解码框架，通过文本扰动来缓解多模态大模型的幻觉。",
+      "llm_tldr": "提出一种无需训练的解码框架，通过文本扰动来缓解多模态大模型的幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12582v1",
+      "source": "arxiv",
+      "title": "Relaxing Anchor-Frame Dominance for Mitigating Hallucinations in Video Large Language Models",
+      "abstract": "Recent Video Large Language Models (Video-LLMs) have demonstrated strong capability in video understanding, yet they still suffer from hallucinations. Existing mitigation methods typically rely on training, input modification, auxiliary guidance, or additional decoding procedures, while largely overlooking a more fundamental challenge. During generation, Video-LLMs tend to over-rely on a limited portion of temporal evidence, leading to temporally imbalanced evidence aggregation across the video. To address this issue, we investigate a decoder-side phenomenon in which the model exhibits a temporally imbalanced concentration pattern. We term the frame with the highest aggregated frame-level attention mass the anchor frame. We find that this bias is largely independent of the input video and instead appears to reflect a persistent, model-specific structural or positional bias, whose over-dominance is closely associated with hallucination-prone generation. Motivated by this insight, we propose Decoder-side Temporal Rebalancing (DTR), a training-free, layer-selective inference method that rebalances temporal evidence allocation in middle-to-late decoder layers without altering visual encoding or requiring auxiliary models. DTR adaptively calibrates decoder-side visual attention to alleviate temporally imbalanced concentration and encourage under-attended frames to contribute more effectively to response generation. In this way, DTR guides the decoder to ground its outputs in temporally broader and more balanced video evidence. Extensive experiments on hallucination and video understanding benchmarks show that DTR consistently improves hallucination robustness across diverse Video-LLM families, while preserving competitive video understanding performance and high inference efficiency.",
+      "authors": [
+        "Zijian Liu",
+        "Sihan Cao",
+        "Pengcheng Zheng",
+        "Kuien Liu",
+        "Caiyan Qin",
+        "Xiaolin Qin",
+        "Jiwei Wei",
+        "Chaoning Zhang"
+      ],
+      "primary_category": "cs.CV",
+      "categories": [
+        "cs.CV"
+      ],
+      "published": "2026-04-14T11:05:42+00:00",
+      "link": "https://arxiv.org/pdf/2604.12582v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mitigating hallucinations in Video-LLMs by addressing temporally imbalanced evidence aggregation",
+      "llm_evidence_cn": "通过解决时间证据聚合不平衡问题来缓解视频大语言模型中的幻觉",
+      "llm_evidence": "通过解决时间证据聚合不平衡问题来缓解视频大语言模型中的幻觉",
+      "canonical_evidence": "通过解决时间证据聚合不平衡问题来缓解视频大语言模型中的幻觉",
+      "llm_tldr_en": "This paper proposes a method to mitigate hallucinations in Video-LLMs by relaxing anchor-frame dominance.",
+      "llm_tldr_cn": "该研究通过缓解锚点帧主导地位，解决了视频大语言模型中的时间证据聚合不平衡及幻觉问题。",
+      "llm_tldr": "该研究通过缓解锚点帧主导地位，解决了视频大语言模型中的时间证据聚合不平衡及幻觉问题。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.12748v1",
+      "source": "arxiv",
+      "title": "Generating Effective CoT Traces for Mitigating Causal Hallucination",
+      "abstract": "Although large language models (LLMs) excel in complex reasoning tasks, they suffer from severe causal hallucination in event causality identification (ECI), particularly in smaller models ($\\leq$1.5B parameters). A promising approach to address this issue is to fine-tune them with Chain-of-Thought (CoT) traces. However, there is currently a lack of CoT trace dataset available for ECI. In this paper, we first investigate the essential criteria that effective CoT traces should possess to mitigate causal hallucination in smaller models. We then design a pipeline to generate CoT traces that meet these criteria. Moreover, since there is currently no metric for quantifying causal hallucination, we also introduce a new metric, the Causal Hallucination Rate (CHR), to quantify causal hallucination, guide the formulation of effective CoT trace criteria, and validate the effectiveness of our pipeline. Our experiments show that fine-tuning with the CoT traces generated by our pipeline not only substantially reduces causal hallucination in smaller LLMs but also improves mean accuracy. Moreover, the fine-tuned models exhibit strong cross-dataset and cross-difficulty generalization, as well as robustness under misleading intervention prompts.",
+      "authors": [
+        "Yiheng Zhao",
+        "Jun Yan"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-14T13:59:06+00:00",
+      "link": "https://arxiv.org/pdf/2604.12748v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mitigating causal hallucination using Chain-of-Thought traces and a new metric",
+      "llm_evidence_cn": "利用思维链追踪和新指标缓解因果幻觉",
+      "llm_evidence": "利用思维链追踪和新指标缓解因果幻觉",
+      "canonical_evidence": "利用思维链追踪和新指标缓解因果幻觉",
+      "llm_tldr_en": "Develops a pipeline to generate CoT traces and a new metric to reduce causal hallucinations in smaller LLMs.",
+      "llm_tldr_cn": "设计了CoT追踪生成流程和新指标CHR，旨在缓解小参数模型在因果推理中的幻觉。",
+      "llm_tldr": "设计了CoT追踪生成流程和新指标CHR，旨在缓解小参数模型在因果推理中的幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.13417v1",
+      "source": "arxiv",
+      "title": "The Cognitive Circuit Breaker: A Systems Engineering Framework for Intrinsic AI Reliability",
+      "abstract": "As Large Language Models (LLMs) are increasingly deployed in mission-critical software systems, detecting hallucinations and ``faked truthfulness'' has become a paramount engineering challenge. Current reliability architectures rely heavily on post-generation, black-box mechanisms, such as Retrieval-Augmented Generation (RAG) cross-checking or LLM-as-a-judge evaluators. These extrinsic methods introduce unacceptable latency, high computational overhead, and reliance on secondary external API calls, frequently violating standard software engineering Service Level Agreements (SLAs). In this paper, we propose the Cognitive Circuit Breaker, a novel systems engineering framework that provides intrinsic reliability monitoring with minimal latency overhead. By extracting hidden states during a model's forward pass, we calculate the ``Cognitive Dissonance Delta'' -- the mathematical gap between an LLM's outward semantic confidence (softmax probabilities) and its internal latent certainty (derived via linear probes). We demonstrate statistically significant detection of cognitive dissonance, highlight architecture-dependent Out-of-Distribution (OOD) generalization, and show that this framework adds negligible computational overhead to the active inference pipeline.",
+      "authors": [
+        "Jonathan Pan"
+      ],
+      "primary_category": "cs.SE",
+      "categories": [
+        "cs.SE",
+        "cs.AI"
+      ],
+      "published": "2026-04-15T02:34:37+00:00",
+      "link": "https://arxiv.org/pdf/2604.13417v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "systems engineering framework for intrinsic hallucination detection in LLMs",
+      "llm_evidence_cn": "用于大模型内部幻觉检测的系统工程框架",
+      "llm_evidence": "用于大模型内部幻觉检测的系统工程框架",
+      "canonical_evidence": "用于大模型内部幻觉检测的系统工程框架",
+      "llm_tldr_en": "Proposes the Cognitive Circuit Breaker for low-latency, intrinsic reliability monitoring to detect hallucinations.",
+      "llm_tldr_cn": "提出“认知断路器”框架，通过内部监控实现低延迟的幻觉检测，提升系统可靠性。",
+      "llm_tldr": "提出“认知断路器”框架，通过内部监控实现低延迟的幻觉检测，提升系统可靠性。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.14324v1",
+      "source": "arxiv",
+      "title": "Purging the Gray Zone: Latent-Geometric Denoising for Precise Knowledge Boundary Awareness",
+      "abstract": "Large language models (LLMs) often exhibit hallucinations due to their inability to accurately perceive their own knowledge boundaries. Existing abstention fine-tuning methods typically partition datasets directly based on response accuracy, causing models to suffer from severe label noise near the decision boundaries and consequently exhibit high rates of abstentions or hallucinations. This paper adopts a latent space representation perspective, revealing a \"gray zone\" near the decision hyperplane where internal belief ambiguity constitutes the core performance bottleneck. Based on this insight, we propose the **GeoDe** (**Geo**metric **De**noising) framework for abstention fine-tuning. This method constructs a truth hyperplane using linear probes and performs \"geometric denoising\" by employing geometric distance as a confidence signal for abstention decisions. This approach filters out ambiguous boundary samples while retaining high-fidelity signals for fine-tuning. Experiments across multiple models (Llama3, Qwen3) and benchmark datasets (TriviaQA, NQ, SciQ, SimpleQA) demonstrate that GeoDe significantly enhances model truthfulness and demonstrates strong generalization in out-of-distribution (OOD) scenarios. Code is available at https://github.com/Notbesidemoon/GeoDe.",
+      "authors": [
+        "Hao An",
+        "Yibin Lou",
+        "Jiayi Guo",
+        "Yang Xu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL"
+      ],
+      "published": "2026-04-15T18:28:34+00:00",
+      "link": "https://arxiv.org/pdf/2604.14324v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "abstention fine-tuning framework to reduce hallucinations by identifying knowledge boundaries",
+      "llm_evidence_cn": "通过识别知识边界减少幻觉的弃权微调框架",
+      "llm_evidence": "通过识别知识边界减少幻觉的弃权微调框架",
+      "canonical_evidence": "通过识别知识边界减少幻觉的弃权微调框架",
+      "llm_tldr_en": "Proposes GeoDe to help LLMs recognize knowledge boundaries and abstain from answering to avoid hallucinations.",
+      "llm_tldr_cn": "提出GeoDe框架，通过潜在空间几何去噪帮助模型识别知识边界，减少强行回答导致的幻觉。",
+      "llm_tldr": "提出GeoDe框架，通过潜在空间几何去噪帮助模型识别知识边界，减少强行回答导致的幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15574v1",
+      "source": "arxiv",
+      "title": "Why Fine-Tuning Encourages Hallucinations and How to Fix It",
+      "abstract": "Large language models are prone to hallucinating factually incorrect statements. A key source of these errors is exposure to new factual information through supervised fine-tuning (SFT), which can increase hallucinations w.r.t. knowledge acquired during pre-training. In this work, we explore whether SFT-induced hallucinations can be mitigated using established tools from the continual learning literature, since they arise as a by-product of knowledge degradation during training. We propose a self-distillation-based SFT method that facilitates effective factual learning while minimizing hallucinations w.r.t. pre-existing knowledge by regularizing output-distribution drift. We also show that, in settings where new knowledge acquisition is unnecessary, suppressing factual plasticity by freezing parameter groups, can preserve task performance while reducing hallucinations. Lastly, we investigate the mechanism behind SFT-induced hallucinations through three hypotheses: capacity limitations, behavior cloning, and localized interference. Our experiments show that a main driver is interference among overlapping semantic representations, and that self-distillation succeeds by mitigating this interference.",
+      "authors": [
+        "Guy Kaplan",
+        "Zorik Gekhman",
+        "Zhen Zhu",
+        "Lotem Rozner",
+        "Yuval Reif",
+        "Swabha Swayamdipta",
+        "Derek Hoiem",
+        "Roy Schwartz"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI",
+        "cs.LG",
+        "cs.NE"
+      ],
+      "published": "2026-04-16T23:08:18+00:00",
+      "link": "https://arxiv.org/pdf/2604.15574v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "mitigating SFT-induced hallucinations using self-distillation and regularization",
+      "llm_evidence_cn": "使用自蒸馏和正则化缓解微调诱导的幻觉",
+      "llm_evidence": "使用自蒸馏和正则化缓解微调诱导的幻觉",
+      "canonical_evidence": "使用自蒸馏和正则化缓解微调诱导的幻觉",
+      "llm_tldr_en": "Investigates how fine-tuning causes hallucinations and proposes a self-distillation method to fix it.",
+      "llm_tldr_cn": "探讨了微调导致幻觉的原因，并提出一种基于自蒸馏的方法来减少知识退化引发的幻觉。",
+      "llm_tldr": "探讨了微调导致幻觉的原因，并提出一种基于自蒸馏的方法来减少知识退化引发的幻觉。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15741v1",
+      "source": "arxiv",
+      "title": "Learning Uncertainty from Sequential Internal Dispersion in Large Language Models",
+      "abstract": "Uncertainty estimation is a promising approach to detect hallucinations in large language models (LLMs). Recent approaches commonly depend on model internal states to estimate uncertainty. However, they suffer from strict assumptions on how hidden states should evolve across layers, and from information loss by solely focusing on last or mean tokens. To address these issues, we present Sequential Internal Variance Representation (SIVR), a supervised hallucination detection framework that leverages token-wise, layer-wise features derived from hidden states. SIVR adopts a more basic assumption that uncertainty manifests in the degree of dispersion or variance of internal representations across layers, rather than relying on specific assumptions, which makes the method model and task agnostic. It additionally aggregates the full sequence of per-token variance features, learning temporal patterns indicative of factual errors and thereby preventing information loss. Experimental results demonstrate SIVR consistently outperforms strong baselines. Most importantly, SIVR enjoys stronger generalisation and avoids relying on large training sets, highlighting the potential for practical deployment. Our code repository is available online at https://github.com/ponhvoan/internal-variance.",
+      "authors": [
+        "Ponhvoan Srey",
+        "Xiaobao Wu",
+        "Cong-Duy Nguyen",
+        "Anh Tuan Luu"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-17T06:31:29+00:00",
+      "link": "https://arxiv.org/pdf/2604.15741v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "supervised hallucination detection framework using internal variance of representations",
+      "llm_evidence_cn": "利用内部表示方差的有监督幻觉检测框架",
+      "llm_evidence": "利用内部表示方差的有监督幻觉检测框架",
+      "canonical_evidence": "利用内部表示方差的有监督幻觉检测框架",
+      "llm_tldr_en": "Introduces SIVR, a framework that detects hallucinations by analyzing the dispersion of internal LLM states.",
+      "llm_tldr_cn": "提出SIVR框架，通过分析大模型内部表示的离散程度来检测幻觉，无需特定演化假设。",
+      "llm_tldr": "提出SIVR框架，通过分析大模型内部表示的离散程度来检测幻觉，无需特定演化假设。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    },
+    {
+      "id": "2604.15945v1",
+      "source": "arxiv",
+      "title": "RAGognizer: Hallucination-Aware Fine-Tuning via Detection Head Integration",
+      "abstract": "Retrieval-Augmented Generation (RAG) is widely used to augment the input to Large Language Models (LLMs) with external information, such as recent or domain-specific knowledge. Nonetheless, current models still produce closed-domain hallucinations and generate content that is unsupported by the retrieved context. Current detection approaches typically treat hallucination as a post-hoc problem, relying on black-box consistency checks or probes over frozen internal representations. In this work, we demonstrate that hallucination detection based on internal state representation can also serve as a direct training signal. We introduce RAGognize, a dataset of naturally occurring closed-domain hallucinations with token-level annotations, and RAGognizer, a hallucination-aware fine-tuning approach that integrates a lightweight detection head into an LLM, allowing for the joint optimization of language modeling and hallucination detection. This joint objective forces the model to improve the separability of its internal states regarding hallucinations while simultaneously learning to generate well-formed and meaningful responses. Across multiple benchmarks, RAGognizer achieves state-of-the-art token-level hallucination detection while substantially reducing hallucination rates during generation, without degrading language quality or relevance.",
+      "authors": [
+        "Fabian Ridder",
+        "Laurin Lessel",
+        "Malte Schilling"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.LG"
+      ],
+      "published": "2026-04-17T11:07:32+00:00",
+      "link": "https://arxiv.org/pdf/2604.15945v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 9.0,
+      "llm_evidence_en": "hallucination-aware fine-tuning and detection head integration for RAG systems",
+      "llm_evidence_cn": "针对RAG系统的幻觉感知微调和检测头集成",
+      "llm_evidence": "针对RAG系统的幻觉感知微调和检测头集成",
+      "canonical_evidence": "针对RAG系统的幻觉感知微调和检测头集成",
+      "llm_tldr_en": "Integrates hallucination detection into the training signal to improve RAG model reliability.",
+      "llm_tldr_cn": "将幻觉检测集成到训练信号中，以提高检索增强生成模型的可靠性。",
+      "llm_tldr": "将幻觉检测集成到训练信号中，以提高检索增强生成模型的可靠性。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "methods and frameworks for detecting and mitigating hallucinations in LLMs",
+      "matched_requirement_id": "req-3",
+      "selection_source": "fresh_fetch"
+    }
+  ],
+  "quick_skim": [
+    {
+      "id": "2604.10114v1",
+      "source": "arxiv",
+      "title": "CircuitSynth: Reliable Synthetic Data Generation",
+      "abstract": "The generation of high-fidelity synthetic data is a cornerstone of modern machine learning, yet Large Language Models (LLMs) frequently suffer from hallucinations, logical inconsistencies, and mode collapse when tasked with structured generation. Existing approaches, such as prompting or retrieval-augmented generation, lack the mechanisms to balance linguistic expressivity with formal guarantees regarding validity and coverage. To address this, we propose CircuitSynth, a novel neuro-symbolic framework that decouples semantic reasoning from surface realization. By distilling the reasoning capabilities of a Teacher LLM into a Probabilistic Sentential Decision Diagram (PSDD), CircuitSynth creates a tractable semantic prior that structurally enforces hard logical constraints. Furthermore, we introduce a convex optimization mechanism to rigorously satisfy soft distributional goals. Empirical evaluations across diverse benchmarks demonstrate that CircuitSynth achieves 100% Schema Validity even in complex logic puzzles where unconstrained baselines fail (12.4%) while significantly outperforming state-of-the-art methods in rare-combination coverage.",
+      "authors": [
+        "Zehua Cheng",
+        "Wei Dai",
+        "Jiahao Sun",
+        "Thomas Lukasiewicz"
+      ],
+      "primary_category": "cs.CL",
+      "categories": [
+        "cs.CL",
+        "cs.AI"
+      ],
+      "published": "2026-04-11T09:18:52+00:00",
+      "link": "https://arxiv.org/pdf/2604.10114v1",
+      "tags": [
+        "keyword:LLMH"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "neuro-symbolic framework to address hallucinations and logical inconsistencies in generation",
+      "llm_evidence_cn": "解决生成过程中幻觉和逻辑不一致问题的神经符号框架",
+      "llm_evidence": "解决生成过程中幻觉和逻辑不一致问题的神经符号框架",
+      "canonical_evidence": "解决生成过程中幻觉和逻辑不一致问题的神经符号框架",
+      "llm_tldr_en": "Proposes CircuitSynth to enforce logical constraints and reduce hallucinations in synthetic data generation.",
+      "llm_tldr_cn": "提出CircuitSynth框架，通过强制逻辑约束减少合成数据生成中的幻觉。",
+      "llm_tldr": "提出CircuitSynth框架，通过强制逻辑约束减少合成数据生成中的幻觉。",
+      "llm_tags": [
+        "query:llmh:composite"
+      ],
+      "matched_query_tag": "query:llmh:composite",
+      "matched_query_text": "Papers central to 关于大型语言模型幻觉问题的学术论文检索, especially work that connects or combines: research papers discussing hallucinations in large language models; studies on model hallucination and false generation in AI systems; methods and frameworks for detecting and mitigating hallucinations in LLMs.",
+      "matched_requirement_id": "req-composite-llmh",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    },
+    {
+      "id": "2604.14829v1",
+      "source": "arxiv",
+      "title": "Beyond Literal Summarization: Redefining Hallucination for Medical SOAP Note Evaluation",
+      "abstract": "Evaluating large language models (LLMs) for clinical documentation tasks such as SOAP note generation remains challenging. Unlike standard summarization, these tasks require clinical abstraction, normalization of colloquial language, and medically grounded inference. However, prevailing evaluation methods including automated metrics and LLM as judge frameworks rely on lexical faithfulness, often labeling any information not explicitly present in the transcript as hallucination.   We show that such approaches systematically misclassify clinically valid outputs as errors, inflating hallucination rates and distorting model assessment. Our analysis reveals that many flagged hallucinations correspond to legitimate clinical transformations, including synonym mapping, abstraction of examination findings, diagnostic inference, and guideline consistent care planning.   By aligning evaluation criteria with clinical reasoning through calibrated prompting and retrieval grounded in medical ontologies we observe a significant shift in outcomes. Under a lexical evaluation regime, the mean hallucination rate is 35%, heavily penalizing valid reasoning. With inference aware evaluation, this drops to 9%, with remaining cases reflecting genuine safety concerns. These findings suggest that current evaluation practices over penalize valid clinical reasoning and may measure artifacts of evaluation design rather than true errors, underscoring the need for clinically informed evaluation in high context domains like medicine.",
+      "authors": [
+        "Bhavik Vachhani",
+        "Kush Shrisvastava",
+        "Pranshu Nema",
+        "Sai Chiranthan"
+      ],
+      "primary_category": "cs.AI",
+      "categories": [
+        "cs.AI"
+      ],
+      "published": "2026-04-16T10:04:14+00:00",
+      "link": "https://arxiv.org/pdf/2604.14829v1",
+      "tags": [
+        "keyword:LLMH",
+        "query:LLMH"
+      ],
+      "llm_score": 8.0,
+      "llm_evidence_en": "redefining hallucination for medical tasks to improve evaluation accuracy",
+      "llm_evidence_cn": "重新定义医疗任务中的幻觉以提高评估准确性",
+      "llm_evidence": "重新定义医疗任务中的幻觉以提高评估准确性",
+      "canonical_evidence": "重新定义医疗任务中的幻觉以提高评估准确性",
+      "llm_tldr_en": "Critiques current lexical-based hallucination metrics in medical contexts and proposes a more nuanced definition.",
+      "llm_tldr_cn": "指出医疗文档生成中现有幻觉评估指标的局限性，并提出了更符合临床逻辑的幻觉定义。",
+      "llm_tldr": "指出医疗文档生成中现有幻觉评估指标的局限性，并提出了更符合临床逻辑的幻觉定义。",
+      "llm_tags": [
+        "query:llmh"
+      ],
+      "matched_query_tag": "query:llmh",
+      "matched_query_text": "studies on model hallucination and false generation in AI systems",
+      "matched_requirement_id": "req-2",
+      "selection_source": "fresh_fetch",
+      "quick_tier": "8plus"
+    }
+  ]
+}
