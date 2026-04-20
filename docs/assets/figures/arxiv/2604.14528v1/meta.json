@@ -1,0 +1,62 @@
+{
+  "version": 2,
+  "extractor": "pdffigures2",
+  "figures": [
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-001.webp",
+      "caption": "Figure 1: Comparison of Multi-path Reasoning versus GUARD. Multi-path reasoning relies on repeated sampling of parallel trajectories, whereas GUARD maintains a single primary trajectory and intervenes only at critical transitions using targeted branching.",
+      "page": 1,
+      "index": 1,
+      "width": 458,
+      "height": 285
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-002.webp",
+      "caption": "Figure 9: Qualitative Comparison on OlympiadBench. The Base model (Top) attempts to solve the problem by exhaustively checking prime candidates, eventually getting stuck in an infinite search space. GUARD (Bottom) detects the lack of convergence and steers the reasoning towards a structural proof using modular arithmetic and quadratic residues, proving that k = 3 is impossible.",
+      "page": 21,
+      "index": 2,
+      "width": 954,
+      "height": 1204
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-003.webp",
+      "caption": "Figure 2: Early Concentration of Reasoning Failures. Failure onsets are heavily concentrated in the early stages of generation, and most incorrect trajectories contain only a small number of invalid segments, with 43.5% exhibiting a single error.",
+      "page": 3,
+      "index": 3,
+      "width": 438,
+      "height": 385
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-004.webp",
+      "caption": "Figure 4: Left: Entropy aligned to failure onset, with a localized spike at the transition to invalid reasoning. Right: Entropy density for valid and invalid segments, showing higher dispersion and a shifted mean for error segments.",
+      "page": 4,
+      "index": 4,
+      "width": 941,
+      "height": 196
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-005.webp",
+      "caption": "Figure 7: Qualitative Comparison on AIME. The Base model (Top) retreats from a correct but computationally heavy solution at the structural boundary \\n\\n. GUARD (Bottom) detects the uncertainty spike immediately following the delimiter and steers the model to complete the calculation.",
+      "page": 19,
+      "index": 5,
+      "width": 954,
+      "height": 1061
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-006.webp",
+      "caption": "Figure 8: Qualitative Comparison on Minerva. The Base model (Top) correctly computes the value but actively rejects the result due to its counter-intuitive magnitude, entering a spiral to rationalize its error. GUARD (Bottom) breaks this self-defeating loop by injecting a scaling-law verification, confirming the physical validity of the result.",
+      "page": 20,
+      "index": 6,
+      "width": 954,
+      "height": 1261
+    },
+    {
+      "url": "assets/figures/arxiv/2604.14528v1/fig-007.webp",
+      "caption": "Figure 6: Analysis of Hyperparameter Choices. We analyze how key configuration choices influence model performance. (a) Termination Threshold ρmin: Performance peaks at ρmin = 0.2. Lower values (0.1) intervene too late, exposing the model to the risk of an \"epistemic spiral\" in uncontrolled late-stage reasoning. (b) Quantile Threshold q: q = 0.90 effectively captures failure onsets without excessive triggering. (c) Horizon L: A moderate horizon (L = 200) is chosen as it is sufficient for accurate branch selection, balancing task performance with computational cost.",
+      "page": 16,
+      "index": 7,
+      "width": 937,
+      "height": 258
+    }
+  ]
+}
